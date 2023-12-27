@@ -26,3 +26,8 @@ model coachProfile {
   email         String
   clientProfile clientProfile[]
 }
+
+model foods {
+  ID   String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+}
