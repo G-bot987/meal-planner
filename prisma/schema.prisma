@@ -5,29 +5,35 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// datasource db {
+//   provider = "mongodb"
+//   url      = env("DATABASE_URL")
+// }
 datasource db {
-  provider = "mongodb"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
 model clientProfile {
-  ID       String       @id @default(auto()) @map("_id") @db.ObjectId
-  coach    coachProfile @relation(fields: [coachID], references: [ID])
-  name     String
-  password String
-  email    String
-  coachID  String       @db.ObjectId
+  id             Int           @id @default(autoincrement())
+  coach          coachProfile? @relation(fields: [coachProfileId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  name           String        @db.VarChar(255)
+  password       String
+  email          String        @unique @db.VarChar(255)
+  coachId        String        @db.Uuid
+  coachProfileId Int?          @unique
 }
 
 model coachProfile {
-  ID            String          @id @default(auto()) @map("_id") @db.ObjectId
-  name          String
+  id            Int             @id @default(autoincrement())
+  name          String          @db.VarChar(255)
   password      String
-  email         String
+  email         String          @unique @db.VarChar(255)
   clientProfile clientProfile[]
 }
 
 model foods {
-  ID   String @id @default(auto()) @map("_id") @db.ObjectId
+  id   Int    @id @default(autoincrement())
   name String
 }
