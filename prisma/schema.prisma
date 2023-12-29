@@ -35,5 +35,5 @@ model coachProfile {
 
 model foods {
   id   Int    @id @default(autoincrement())
-  name String
+  name String @unique @db.VarChar(255)
 }
