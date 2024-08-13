@@ -54,6 +54,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
       }
     })
   ],
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks:{
     session:({session, token})=>{
       console.log('session ', token, session)
