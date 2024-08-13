@@ -21,7 +21,6 @@ model clientProfile {
   name           String        @db.VarChar(255)
   password       String
   email          String        @unique @db.VarChar(255)
-  coachId        String        @db.Uuid
   coachProfileId Int?          @unique
 }
 
