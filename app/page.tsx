@@ -1,9 +1,9 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 import { getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]/route";
 import { User } from "./user";
 import { LoginButton, LogoutButton } from "./auth";
+import { authOptions } from "@/utils/authOptions";
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
