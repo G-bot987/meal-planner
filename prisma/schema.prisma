@@ -15,24 +15,69 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
-model clientProfile {
-  id             Int           @id @default(autoincrement())
-  coach          coachProfile? @relation(fields: [coachProfileId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  name           String        @db.VarChar(255)
-  password       String
-  email          String        @unique @db.VarChar(255)
-  coachProfileId Int?          @unique
+model client_profile {
+  id               Int            @id @default(autoincrement())
+  coach            coach_profile? @relation(fields: [coach_profile_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  name             String         @db.VarChar(255)
+  password         String
+  email            String         @unique @db.VarChar(255)
+  coach_profile_id Int?
+  foods_created    food[]
+  created_at       DateTime       @default(now())
+  updated_at       DateTime       @updatedAt
+  meal             meal[]
 }
 
-model coachProfile {
-  id            Int             @id @default(autoincrement())
-  name          String          @db.VarChar(255)
+model coach_profile {
+  id            Int              @id @default(autoincrement())
+  name          String           @db.VarChar(255)
   password      String
-  email         String          @unique @db.VarChar(255)
-  clientProfile clientProfile[]
+  email         String           @unique @db.VarChar(255)
+  clientProfile client_profile[]
+  created_at    DateTime         @default(now())
+  updated_at    DateTime         @updatedAt
+  food          food[]
+  meal          meal[]
 }
 
-model foods {
-  id   Int    @id @default(autoincrement())
-  name String @unique @db.VarChar(255)
+model food {
+  id             Int              @id @default(autoincrement())
+  name           String           @unique @db.VarChar(255)
+  calories       Float
+  fat            Float
+  protein        Float
+  carbohydrates  Float
+  fibre          Float
+  sugar          Float
+  weight         Float
+  client_creator client_profile?  @relation(fields: [client_id], references: [id])
+  client_id      Int?
+  coach_creator  coach_profile?   @relation(fields: [coach_id], references: [id])
+  coach_id       Int?
+  meals          foods_in_meals[]
+  created_at     DateTime         @default(now())
+  updated_at     DateTime         @updatedAt
+}
+
+model meal {
+  id             Int              @id @default(autoincrement())
+  name           String
+  foods          foods_in_meals[]
+  client_creator client_profile?  @relation(fields: [client_id], references: [id])
+  client_id      Int?
+  coach_creator  coach_profile?   @relation(fields: [coach_id], references: [id])
+  coach_id       Int?
+  created_at     DateTime         @default(now())
+  updated_at     DateTime         @updatedAt
+}
+
+model foods_in_meals {
+  meal        meal     @relation(fields: [meal_id], references: [id])
+  meal_id     Int
+  food        food     @relation(fields: [food_id], references: [id])
+  food_id     Int
+  assigned_at DateTime @default(now())
+  assigned_by String
+
+  @@id([meal_id, food_id])
 }

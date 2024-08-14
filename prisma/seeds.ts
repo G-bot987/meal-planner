@@ -6,11 +6,18 @@ const prisma = new PrismaClient()
 
 async function createFoods() {
     console.log('creating foods')
-    await prisma.foods.upsert({
+    await prisma.food.upsert({
         where: { name: 'carrot' },
         update: {}, 
         create: {
           name: 'carrot',
+          calories:       1,
+          fat:            1,
+          protein:        1,
+          carbohydrates:  1,
+          fibre:          1,
+          sugar:          1,
+          weight:         1,
         },
     })
 }
@@ -18,7 +25,7 @@ async function createFoods() {
 async function createUser() {
     console.log('creating user')
     const password = await hash('test', 12)
-    await prisma.clientProfile.upsert({
+    await prisma.client_profile.upsert({
         where: { email: 'test@test.com' },
         update: {},
         create: {
@@ -31,7 +38,7 @@ async function createUser() {
 
 async function main() {
     createFoods()
-    createUser()
+    // createUser()
 }
 
 main()
