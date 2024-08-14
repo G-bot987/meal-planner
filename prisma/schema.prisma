@@ -15,21 +15,21 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
-model clientProfile {
-  id             Int           @id @default(autoincrement())
-  coach          coachProfile? @relation(fields: [coachProfileId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  name           String        @db.VarChar(255)
+model client_profile {
+  id             Int            @id @default(autoincrement())
+  coach          coach_profile? @relation(fields: [coachProfileId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  name           String         @db.VarChar(255)
   password       String
-  email          String        @unique @db.VarChar(255)
-  coachProfileId Int?          @unique
+  email          String         @unique @db.VarChar(255)
+  coachProfileId Int?           @unique
 }
 
-model coachProfile {
-  id            Int             @id @default(autoincrement())
-  name          String          @db.VarChar(255)
+model coach_profile {
+  id            Int              @id @default(autoincrement())
+  name          String           @db.VarChar(255)
   password      String
-  email         String          @unique @db.VarChar(255)
-  clientProfile clientProfile[]
+  email         String           @unique @db.VarChar(255)
+  clientProfile client_profile[]
 }
 
 model foods {
