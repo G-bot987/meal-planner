@@ -24,7 +24,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
         {return null}
         console.log('creds provided')
         console.log(credentials.email)
-        const user = await prisma.clientProfile.findUnique(
+        const user = await prisma.client_profile.findUnique(
           {
             where : {
               email: credentials.email         }
