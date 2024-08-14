@@ -48,7 +48,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
           id: user.id + '',
           email: user.email,
           name: user.name,
-          coachProfileId: user.coachProfileId,
+          coachProfileId: user.coach_profile_id,
           randomKey: 'hey cool'
         }
       }

@@ -6,11 +6,18 @@ const prisma = new PrismaClient()
 
 async function createFoods() {
     console.log('creating foods')
-    await prisma.foods.upsert({
+    await prisma.food.upsert({
         where: { name: 'carrot' },
         update: {}, 
         create: {
           name: 'carrot',
+          calories:       1,
+          fat:            1,
+          protein:        1,
+          carbohydrates:  1,
+          fibre:          1,
+          sugar:          1,
+          weight:         1,
         },
     })
 }
@@ -31,7 +38,7 @@ async function createUser() {
 
 async function main() {
     createFoods()
-    createUser()
+    // createUser()
 }
 
 main()
