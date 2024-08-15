@@ -1,8 +1,6 @@
-import Image from "next/image";
-import styles from "./page.module.css";
 import { getServerSession } from "next-auth";
-import { User } from "./user";
-import { LoginButton, LogoutButton } from "./auth";
+import { User } from "../components/authcomps/user";
+import { LoginButton, LogoutButton } from "../components/authcomps/auth";
 import { authOptions } from "@/utils/authOptions";
 
 export default async function Home() {
