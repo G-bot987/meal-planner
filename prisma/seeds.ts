@@ -20,6 +20,34 @@ async function createFoods() {
           weight:         1,
         },
     })
+    await prisma.food.upsert({
+        where: { name: 'chicken' },
+        update: {}, 
+        create: {
+          name: 'chicken',
+          calories:       4,
+          fat:            0.12,
+          protein:        0.54,
+          carbohydrates:  0.10,
+          fibre:          0.0,
+          sugar:          0.0,
+          weight:         2,
+        },
+    })
+    await prisma.food.upsert({
+        where: { name: 'bread' },
+        update: {}, 
+        create: {
+          name: 'bread',
+          calories:       10,
+          fat:            0.4,
+          protein:        0.10,
+          carbohydrates:  2.0,
+          fibre:          0.3,
+          sugar:          0.0,
+          weight:         4,
+        },
+    })
 }
 
 async function createUser() {
@@ -36,9 +64,28 @@ async function createUser() {
     })
 }
 
+async function createMeals() {
+    console.log('creating meals')
+    await prisma.meal.upsert({
+        where: { id: 1 },
+        update: {}, 
+        create: {
+          name: 'Chicken Sandwich',
+          client_id: 1,
+          foods: {
+            create: [
+              { food: { connect: { id: 2 } }, assigned_by: 'admin' },
+              { food: { connect: { id: 3 } }, assigned_by: 'admin' },
+            ],
+          },
+        },
+      });
+}
+
 async function main() {
     createFoods()
-    // createUser()
+    createUser()
+    createMeals()
 }
 
 main()
