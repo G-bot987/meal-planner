@@ -78,6 +78,7 @@ model foods_in_meals {
   food_id     Int
   assigned_at DateTime @default(now())
   assigned_by String
+  servings    Int      @default(1)
 
   @@id([meal_id, food_id])
 }
