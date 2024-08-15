@@ -1,0 +1,90 @@
+/* styles/reset.scss */
+
+/* Box sizing reset for all elements */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Remove default margin */
+body,
+h1, h2, h3, h4, h5, h6,
+p, blockquote, pre,
+figure, dl, dd {
+  margin: 0;
+}
+
+/* Remove list styles on ul, ol elements */
+ul[class],
+ol[class] {
+  list-style: none;
+}
+
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Remove text decoration and underline from links */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Remove default table border and spacing */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Remove default padding from input fields */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+}
+
+/* Set default font family and size */
+html {
+  font-family: sans-serif;
+  font-size: 100%;
+}
+
+/* Remove built-in form element styles */
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit; /* Use the font in the parent */
+  font-size: 100%; /* Inherit font-size from parent */
+}
+
+/* Make images easier to work with */
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+/* Inherit line-height and font for form elements */
+button,
+input,
+textarea,
+select {
+  line-height: inherit;
+  font: inherit;
+}
+
+/* Set a consistent line-height for heading elements */
