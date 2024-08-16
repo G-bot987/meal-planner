@@ -3,18 +3,52 @@ import styles from "./diary.module.scss";
 export default function Diary() {
   return (
     <section>
-      <article>
-        <table className={styles.test}>
+      <article className={styles.table__wrapper}>
+        <table className={styles.table__wrapper__table}>
           <tbody>
-            <tr>
-              <th>Meal</th>
-              <th>Monday</th>
-              <th>Tuesday</th>
-              <th>Wednesday</th>
-              <th>Thursday</th>
-              <th>Friday</th>
-              <th>Saturday</th>
-              <th>Sunday</th>
+            <tr className={styles.table__wrapper__table__top__row}>
+              <th
+                className={
+                  styles.table__wrapper__table__top__row__meal__collumn
+                }
+              >
+                Meal
+              </th>
+              <th
+                className={styles.table__wrapper__table__top__row__day__collumn}
+              >
+                Monday
+              </th>
+              <th
+                className={styles.table__wrapper__table__top__row__day__collumn}
+              >
+                Tuesday
+              </th>
+              <th
+                className={styles.table__wrapper__table__top__row__day__collumn}
+              >
+                Wednesday
+              </th>
+              <th
+                className={styles.table__wrapper__table__top__row__day__collumn}
+              >
+                Thursday
+              </th>
+              <th
+                className={styles.table__wrapper__table__top__row__day__collumn}
+              >
+                Friday
+              </th>
+              <th
+                className={styles.table__wrapper__table__top__row__day__collumn}
+              >
+                Saturday
+              </th>
+              <th
+                className={styles.table__wrapper__table__top__row__day__collumn}
+              >
+                Sunday
+              </th>
             </tr>
             <tr>
               <td>Breakfast</td>
