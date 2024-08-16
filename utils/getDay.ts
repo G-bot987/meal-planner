@@ -10,8 +10,8 @@ export function getCurrentDay(): {date:string, day:string} {
 }
 
 
-export function getTomorrowDay(): {date:string, day:string} {
-    const tomorrow = addDays(new Date(), 1);
+export function getTomorrowDay(day: number): {date:string, day:string} {
+    const tomorrow = addDays(new Date(), day);
     const formattedDay = {
     date:  format( tomorrow, 'yyyy-MM-dd'),
     day: format(tomorrow, 'eeee')
@@ -20,8 +20,8 @@ export function getTomorrowDay(): {date:string, day:string} {
   }
 
 
-  export function getTYesterdayDay(): {date:string, day:string} {
-    const yesterday = subDays(new Date(), 1);
+  export function getTYesterdayDay(day: number): {date:string, day:string} {
+    const yesterday = subDays(new Date(), Math.abs(day));
     const formattedDay = {
     date:  format( yesterday, 'yyyy-MM-dd'),
     day: format(yesterday, 'eeee')
