@@ -1,3 +1,27 @@
-.test{
-    background-color: green;
+
+
+
+.table__wrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    &__table{
+        background-color: rgb(208, 203, 203);
+        font-family: darker-grotesque, sans-serif;
+        font-weight: 600;
+        font-style: normal;
+        &__top__row{
+            border-bottom: 2px solid  azure;
+            &__meal__collumn{
+                border-right: 2px solid  azure ;
+            }
+            &__day__collumn{
+                border-right: 2px solid  azure ;
+                border-left: 2px solid  azure ;
+                width: 4rem;
+
+            }
+        }
+    }
 }
