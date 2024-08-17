@@ -18,14 +18,12 @@ datasource db {
 model client_profile {
   id      Int            @id @default(autoincrement())
   coach   coach_profile? @relation(fields: [coach_profile_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  user    user?          @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  user_id Int?           @unique
+  user    user           @relation("UserToClientProfile", fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  user_id Int            @unique
 
   coach_profile_id Int?
-  foods_created    food[]
   created_at       DateTime  @default(now())
   updated_at       DateTime  @updatedAt
-  meal             meal[]
   deleted_at       DateTime?
 }
 
@@ -39,55 +37,66 @@ model user {
   created_at     DateTime        @default(now())
   updated_at     DateTime        @updatedAt
   // client_profile client_profile
-  coach_profile  coach_profile?
-  client_profile client_profile?
+  coach_profile  coach_profile?  @relation("UserToCoachProfile")
+  client_profile client_profile? @relation("UserToClientProfile")
   deleted_at     DateTime?
+  meal_created   meal[]
+  foods_created  food[]
+  user_history   logged_meals[]
+}
+
+model logged_meals {
+  id         Int      @id @default(autoincrement())
+  user       user     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  user_id    Int
+  meal       meal[]   @relation("LoggedMealsToMeal")
+  food       food[]   @relation("LoggedMealsToFood")
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@index([user_id])
 }
 
 model coach_profile {
-  id   Int   @id @default(autoincrement())
-  user user? @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id   Int  @id @default(autoincrement())
+  user user @relation("UserToCoachProfile", fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
-  user_id       Int?             @unique
+  user_id       Int              @unique
   clientProfile client_profile[]
   created_at    DateTime         @default(now())
   updated_at    DateTime         @updatedAt
-  food          food[]
-  meal          meal[]
   deleted_at    DateTime?
 }
 
 model food {
-  id             Int              @id @default(autoincrement())
-  name           String           @unique @db.VarChar(255)
-  calories       Float
-  fat            Float
-  protein        Float
-  carbohydrates  Float
-  fibre          Float
-  sugar          Float
-  weight         Float
-  client_creator client_profile?  @relation(fields: [client_id], references: [id])
-  client_id      Int?
-  coach_creator  coach_profile?   @relation(fields: [coach_id], references: [id])
-  coach_id       Int?
-  meals          foods_in_meals[]
-  created_at     DateTime         @default(now())
-  updated_at     DateTime         @updatedAt
-  deleted_at     DateTime?
+  id            Int              @id @default(autoincrement())
+  name          String           @unique @db.VarChar(255)
+  calories      Float
+  fat           Float
+  protein       Float
+  carbohydrates Float
+  fibre         Float
+  sugar         Float
+  weight        Float
+  meals         foods_in_meals[]
+  created_at    DateTime         @default(now())
+  updated_at    DateTime         @updatedAt
+  deleted_at    DateTime?
+  user_creator  user?            @relation(fields: [user_id], references: [id])
+  user_id       Int?
+  logged_meals  logged_meals[]   @relation("LoggedMealsToFood")
 }
 
 model meal {
-  id             Int              @id @default(autoincrement())
-  name           String
-  foods          foods_in_meals[]
-  client_creator client_profile?  @relation(fields: [client_id], references: [id])
-  client_id      Int?
-  coach_creator  coach_profile?   @relation(fields: [coach_id], references: [id])
-  coach_id       Int?
-  created_at     DateTime         @default(now())
-  updated_at     DateTime         @updatedAt
-  deleted_at     DateTime?
+  id           Int              @id @default(autoincrement())
+  name         String
+  foods        foods_in_meals[]
+  user_creator user             @relation(fields: [user_id], references: [id])
+  user_id      Int
+  created_at   DateTime         @default(now())
+  updated_at   DateTime         @updatedAt
+  deleted_at   DateTime?
+  logged_meals logged_meals[]   @relation("LoggedMealsToMeal")
 }
 
 model foods_in_meals {
