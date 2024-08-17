@@ -71,11 +71,11 @@ async function createMeals() {
         update: {}, 
         create: {
           name: 'Chicken Sandwich',
-          client_id: 1,
+          user_id: 1,
           foods: {
             create: [
-              { food: { connect: { id: 2 } }, assigned_by: 'admin' },
               { food: { connect: { id: 3 } }, assigned_by: 'admin' },
+              { food: { connect: { id: 4 } }, assigned_by: 'admin' },
             ],
           },
         },
@@ -84,8 +84,8 @@ async function createMeals() {
 
 async function main() {
     // createFoods()
-    createUser()
-    // createMeals()
+    // createUser()
+    createMeals()
 }
 
 main()
