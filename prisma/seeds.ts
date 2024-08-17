@@ -53,7 +53,7 @@ async function createFoods() {
 async function createUser() {
     console.log('creating user')
     const password = await hash('test', 12)
-    await prisma.client_profile.upsert({
+    await prisma.user.upsert({
         where: { email: 'test@test.com' },
         update: {},
         create: {
@@ -83,9 +83,9 @@ async function createMeals() {
 }
 
 async function main() {
-    createFoods()
+    // createFoods()
     createUser()
-    createMeals()
+    // createMeals()
 }
 
 main()
