@@ -16,28 +16,45 @@ datasource db {
 }
 
 model client_profile {
-  id               Int            @id @default(autoincrement())
-  coach            coach_profile? @relation(fields: [coach_profile_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  name             String         @db.VarChar(255)
-  password         String
-  email            String         @unique @db.VarChar(255)
+  id      Int            @id @default(autoincrement())
+  coach   coach_profile? @relation(fields: [coach_profile_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  user    user?          @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  user_id Int?           @unique
+
   coach_profile_id Int?
   foods_created    food[]
-  created_at       DateTime       @default(now())
-  updated_at       DateTime       @updatedAt
+  created_at       DateTime  @default(now())
+  updated_at       DateTime  @updatedAt
   meal             meal[]
+  deleted_at       DateTime?
+}
+
+model user {
+  id             Int             @id @default(autoincrement())
+  name           String          @db.VarChar(255)
+  password       String
+  email          String          @unique @db.VarChar(255)
+  coach_id       Int?
+  client_id      Int?
+  created_at     DateTime        @default(now())
+  updated_at     DateTime        @updatedAt
+  // client_profile client_profile
+  coach_profile  coach_profile?
+  client_profile client_profile?
+  deleted_at     DateTime?
 }
 
 model coach_profile {
-  id            Int              @id @default(autoincrement())
-  name          String           @db.VarChar(255)
-  password      String
-  email         String           @unique @db.VarChar(255)
+  id   Int   @id @default(autoincrement())
+  user user? @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  user_id       Int?             @unique
   clientProfile client_profile[]
   created_at    DateTime         @default(now())
   updated_at    DateTime         @updatedAt
   food          food[]
   meal          meal[]
+  deleted_at    DateTime?
 }
 
 model food {
@@ -57,6 +74,7 @@ model food {
   meals          foods_in_meals[]
   created_at     DateTime         @default(now())
   updated_at     DateTime         @updatedAt
+  deleted_at     DateTime?
 }
 
 model meal {
@@ -69,6 +87,7 @@ model meal {
   coach_id       Int?
   created_at     DateTime         @default(now())
   updated_at     DateTime         @updatedAt
+  deleted_at     DateTime?
 }
 
 model foods_in_meals {
