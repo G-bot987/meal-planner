@@ -9,11 +9,13 @@ import {
 import styles from "./diary.module.scss";
 
 import { useEffect, useState } from "react";
+import Row from "./Row";
 
 export default function MobileDiary() {
   const currentDay = getCurrentDay();
   const [day, setDay] = useState(currentDay);
   const [getAnotherDay, setGetAnotherDay] = useState(0);
+  const meals = ["morning", "lunch", "evening", "post work out", "snacks"];
   useEffect(() => {
     if (getAnotherDay > 0) {
       setDay(getTomorrowDay(getAnotherDay));
@@ -47,21 +49,9 @@ export default function MobileDiary() {
               {day.day}
             </th>
           </tr>
-          <tr>
-            <td>Breakfast</td>
-          </tr>
-          <tr>
-            <td>Lunch</td>
-          </tr>
-          <tr>
-            <td>Post workout</td>
-          </tr>
-          <tr>
-            <td>Dinner</td>
-          </tr>
-          <tr>
-            <td>snacks</td>
-          </tr>
+          {meals.map((meal: string, index: number) => {
+            return <Row {...{ meal }} key={index} />;
+          })}
         </tbody>
       </table>
 
