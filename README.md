@@ -42,3 +42,5 @@ if you struggle to out the connection string see above or reach out to me here o
 - BEM
 - Next Auth
 - TypeScript
+- zustland
+- jest
