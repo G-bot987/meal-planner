@@ -7,20 +7,32 @@
     align-items: center;
     justify-content: center;
     &__table{
-        background-color: rgb(208, 203, 203);
+        background-color: var(--background-color);
         font-family: "darker-grotesque";
         font-weight: 600;
         font-style: normal;
+        color: var(--text-color);
+        text-transform: uppercase;
+        border: 2px solid var(--secondary-color) ;
         &__top__row{
-            border-bottom: 2px solid  azure;
+            border-bottom: 2px solid var(--secondary-color) ;
             &__meal__collumn{
-                border-right: 2px solid  azure ;
+                border-right: 2px solid   var(--secondary-color) ;
             }
             &__day__collumn{
-                border-right: 2px solid  azure ;
-                border-left: 2px solid  azure ;
                 width: 4rem;
-
+            }
+        }
+        &__meal__row{
+            border-right: 2px solid   var(--secondary-color) ;
+            border-bottom: 2px solid   var(--secondary-color) ;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0 0.25rem;
+            &__last {
+                border-bottom:none ;
             }
         }
     }
@@ -31,4 +43,59 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    padding: 0rem 0.5rem
 }
+
+
+.button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  
+    &__chevron {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+  
+      &--right {
+        position: relative;
+        display: inline-block;
+        width: 0;
+        height: 0;
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        border-left: 10px solid black;
+      }
+  
+      &--large {
+        border-top-width: 10px;
+        border-bottom-width: 10px;
+        border-left-width: 20px;
+      }
+
+      &--left {
+        position: relative;
+        display: inline-block;
+        width: 0;
+        height: 0;
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        border-right: 10px solid black;
+      }
+  
+      &--large {
+        &--right {
+          border-top-width: 10px;
+          border-bottom-width: 10px;
+          border-left-width: 20px;
+        }
+        &--left {
+          border-top-width: 10px;
+          border-bottom-width: 10px;
+          border-right-width: 20px;
+        }
+      }
+    }
+  }
+  
