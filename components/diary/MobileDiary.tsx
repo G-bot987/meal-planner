@@ -31,8 +31,16 @@ export default function MobileDiary() {
         onClick={() => {
           setGetAnotherDay(getAnotherDay - 1);
         }}
+        className={styles.button}
       >
-        get yesterday
+        <div
+          className={`${styles.button__chevron} ${styles["button__chevron--left"]} ${styles["button__chevron--large--left"]}`}
+        ></div>
+        <div
+          className={
+            styles.button__chevron + " " + styles["button__chevron--left"]
+          }
+        ></div>
       </button>
       <table className={styles.table__wrapper__table}>
         <tbody>
@@ -50,7 +58,7 @@ export default function MobileDiary() {
             </th>
           </tr>
           {meals.map((meal: string, index: number) => {
-            return <Row {...{ meal }} key={index} />;
+            return <Row {...{ meal, index }} key={index} />;
           })}
         </tbody>
       </table>
@@ -59,8 +67,16 @@ export default function MobileDiary() {
         onClick={() => {
           setGetAnotherDay(getAnotherDay + 1);
         }}
+        className={styles.button}
       >
-        get tomorrow
+        <div
+          className={
+            styles.button__chevron + " " + styles["button__chevron--right"]
+          }
+        ></div>
+        <div
+          className={`${styles.button__chevron} ${styles["button__chevron--right"]} ${styles["button__chevron--large"]}`}
+        ></div>
       </button>
     </section>
   );
