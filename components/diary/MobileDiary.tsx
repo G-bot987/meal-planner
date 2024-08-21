@@ -27,6 +27,7 @@ export default function MobileDiary() {
   }, [getAnotherDay]);
   return (
     <section className={styles.mobile__wrapper}>
+      <h1 className={styles.mobile__wrapper__header}>Diary </h1>
       <button
         onClick={() => {
           setGetAnotherDay(getAnotherDay - 1);

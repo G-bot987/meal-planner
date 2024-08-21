@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import styles from "./diary.module.scss";
 import AddMealStepper from "../addMealStepper/AddMealStepper";
 
@@ -10,6 +10,9 @@ export default function Row(props: mealInterface) {
   const { meal, index } = props;
   const [logged, setLogged] = useState(false);
   const [showAddMenu, setShowAddmenu] = useState(false);
+  const toggleMealStepper = useCallback(() => {
+    setShowAddmenu((prevState: boolean) => !prevState);
+  }, []);
   return (
     <>
       <tr>
@@ -22,14 +25,14 @@ export default function Row(props: mealInterface) {
         </td>
         <td>
           <button
-            onClick={() => {
-              setShowAddmenu(!showAddMenu);
-            }}
+            onClick={toggleMealStepper}
             className={styles.table__wrapper__table__meal__row__btn}
           >
             add
           </button>
-          {showAddMenu && <AddMealStepper />}
+          {showAddMenu && (
+            <AddMealStepper toggleMealStepper={toggleMealStepper} />
+          )}
         </td>
       </tr>
       {logged && (

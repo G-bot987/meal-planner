@@ -17,10 +17,5 @@ export default function Dashboard() {
     // clean up function will only run in unmounting phase not executed initially
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-  return (
-    <div>
-      super mega awesome dashbord page
-      {isMobile ? <MobileDiary /> : <Diary />}
-    </div>
-  );
+  return <section>{isMobile ? <MobileDiary /> : <Diary />}</section>;
 }
