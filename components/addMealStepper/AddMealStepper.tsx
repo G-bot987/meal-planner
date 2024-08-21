@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import styles from "./addMealStepper.module.scss";
-import StepOne from "./StepOne";
+import StepOne from "./stepOne/StepOne";
 import StepTwo from "./StepTwo";
 import StepThree from "./StepThree";
 
