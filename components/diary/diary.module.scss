@@ -6,6 +6,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    
     &__table{
         background-color: var(--background-color);
         font-family: "darker-grotesque";
@@ -48,7 +49,14 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 0rem 0.5rem
+    padding: 0rem 0.5rem;
+    flex-wrap: wrap;
+
+    &__header{
+        width: 320px; 
+        color: var(--text-color);
+        text-align: center;
+     }
 }
 
 
@@ -70,7 +78,7 @@
         height: 0;
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
-        border-left: 10px solid black;
+        border-left: 10px solid var(--secondary-color);
       }
   
       &--large {
@@ -86,7 +94,7 @@
         height: 0;
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
-        border-right: 10px solid black;
+        border-right: 10px solid var(--secondary-color);
       }
   
       &--large {
