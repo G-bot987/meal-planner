@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styles from "./diary.module.scss";
+import AddMealStepper from "../addMealStepper/AddMealStepper";
 
 interface mealInterface {
   meal: string;
@@ -7,7 +8,7 @@ interface mealInterface {
 }
 export default function Row(props: mealInterface) {
   const { meal, index } = props;
-  const [logged, setLogged] = useState(null);
+  const [logged, setLogged] = useState(false);
   const [showAddMenu, setShowAddmenu] = useState(false);
   return (
     <>
@@ -24,17 +25,11 @@ export default function Row(props: mealInterface) {
             onClick={() => {
               setShowAddmenu(!showAddMenu);
             }}
+            className={styles.table__wrapper__table__meal__row__btn}
           >
-            add{" "}
+            add
           </button>
-          {showAddMenu && (
-            <ul>
-              <li>its</li>
-              <li>time </li>
-              <li>to add</li>
-              <li>a meal</li>
-            </ul>
-          )}
+          {showAddMenu && <AddMealStepper />}
         </td>
       </tr>
       {logged && (
