@@ -9,21 +9,17 @@ export default function Search(props: { param: string }) {
   const [errors, setErrors] = useState(null);
   const [searchResults, setSearchResults] = useState(null);
   const handleSearch = async (searchQuery: any) => {
-    console.log("search baby", searchQuery, param);
+    console.log("search", searchQuery, param);
     try {
       // const search = await fetch()
     } catch (error) {}
   };
 
   const handleInput = (e: any) => {
-    console.log("handler");
     const userInput = e.target.value;
 
-    console.log(searchValue);
-    console.log("---");
     setSearchValue(userInput);
     if (userInput.length > 4) {
-      console.log("pre search");
       handleSearch(userInput);
     }
   };
