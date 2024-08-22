@@ -11,7 +11,13 @@ export default function Search(props: { param: string }) {
   const handleSearch = async (searchQuery: any) => {
     console.log("search", searchQuery, param);
     try {
-      // const search = await fetch()
+      const search = await fetch(`/api/foods/${searchQuery}`, {
+        method: "GET",
+      });
+      const result = await search.json();
+      console.log("result");
+      console.log(result);
+      console.log("---");
     } catch (error) {}
   };
 
