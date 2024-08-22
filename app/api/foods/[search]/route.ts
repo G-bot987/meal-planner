@@ -9,7 +9,8 @@ export async function GET(request: Request, context:any) {
    const data = await prisma.food.findMany({
         where: {
           name: {
-            startsWith: params.search ,
+            contains: params.search ,
+            mode: 'insensitive'
           },
         },
       })
