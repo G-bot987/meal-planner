@@ -20,6 +20,9 @@ export default function MobileDiary() {
     if (getAnotherDay > 0) {
       setDay(getTomorrowDay(getAnotherDay));
     }
+    if (getAnotherDay === 0) {
+      setDay(getCurrentDay());
+    }
 
     if (getAnotherDay < 0) {
       setDay(getTYesterdayDay(getAnotherDay));
