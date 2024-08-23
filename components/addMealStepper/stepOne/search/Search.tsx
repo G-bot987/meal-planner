@@ -1,41 +1,41 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../stepOne.module.scss";
+import FoodResults, { FOODINTERFACE } from "./searchResults/FoodResults";
+import MealResults from "./searchResults/MealResults";
 
 export default function Search(props: { param: string }) {
   const { param } = props;
   const [searchValue, setSearchValue] = useState("");
   const [loading, setLoading] = useState(false);
-
   const [errors, setErrors] = useState(null);
-  const [searchResults, setSearchResults] = useState(null);
-  const handleSearch = async (searchQuery: any) => {
-    console.log("search", searchQuery, param);
+  const [searchResults, setSearchResults] = useState<FOODINTERFACE[] | null>(
+    null
+  );
+
+  const handleSearch = async (searchQuery: string) => {
+    if (searchQuery.length < 4) {
+      setSearchResults(null);
+      return;
+    }
+
     try {
-      const search = await (async () => {
-        if (param === "foods") {
-          return await fetch(`/api/foods/${searchQuery}`, {
-            method: "GET",
-          });
-        } else {
-          return await fetch(`/api/meals/${searchQuery}`, {
-            method: "GET",
-          });
-        }
-      })();
+      const search = await fetch(`/api/${param}/${searchQuery}`, {
+        method: "GET",
+      });
+
       const result = await search.json();
-      console.log("result");
-      console.log(result);
-      console.log("---");
+      setSearchResults(result);
     } catch (error) {}
   };
+
+  useEffect(() => {
+    handleSearch(searchValue);
+  }, [searchValue]);
 
   const handleInput = (e: any) => {
     const userInput = e.target.value;
 
     setSearchValue(userInput);
-    if (userInput.length > 4) {
-      handleSearch(userInput);
-    }
   };
 
   return (
@@ -49,6 +49,17 @@ export default function Search(props: { param: string }) {
       />
 
       <button className={styles.form__submit}> search </button>
+      {Array.isArray(searchResults) && param === "foods" && (
+        <ul>
+          {searchResults.map((food: FOODINTERFACE) => (
+            <FoodResults key={food.id} food={food} />
+          ))}
+        </ul>
+      )}
+
+      {searchResults && param === "meals" && (
+        <MealResults results={searchResults} />
+      )}
     </section>
   );
 }
