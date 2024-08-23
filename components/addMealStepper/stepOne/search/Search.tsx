@@ -58,7 +58,9 @@ export default function Search(props: { param: string }) {
       )}
 
       {searchResults && param === "meals" && (
-        <MealResults results={searchResults} />
+        <ul>
+          <MealResults results={searchResults} />
+        </ul>
       )}
     </section>
   );
