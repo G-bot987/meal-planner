@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styles from "../stepOne.module.scss";
-import FoodResults, { FOODINTERFACE } from "./searchResults/FoodResults";
+import FoodResults from "./searchResults/FoodResults";
 import MealResults from "./searchResults/MealResults";
+import {
+  FOODINTERFACE,
+  MEALSINTERFACE,
+} from "@/utils/interfaces/mealsAndFoodsInterfaces/interfaces";
 
 export default function Search(props: { param: string }) {
   const { param } = props;
@@ -11,6 +15,9 @@ export default function Search(props: { param: string }) {
   const [searchResults, setSearchResults] = useState<FOODINTERFACE[] | null>(
     null
   );
+  const [mealSearchResults, setMealSearchResults] = useState<
+    MEALSINTERFACE[] | null
+  >(null);
 
   const handleSearch = async (searchQuery: string) => {
     if (searchQuery.length < 4) {
@@ -24,7 +31,12 @@ export default function Search(props: { param: string }) {
       });
 
       const result = await search.json();
-      setSearchResults(result);
+      if (param === "foods") {
+        setSearchResults(result);
+      }
+      if (param === "meals") {
+        setMealSearchResults(result);
+      }
     } catch (error) {}
   };
 
@@ -32,9 +44,8 @@ export default function Search(props: { param: string }) {
     handleSearch(searchValue);
   }, [searchValue]);
 
-  const handleInput = (e: any) => {
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const userInput = e.target.value;
-
     setSearchValue(userInput);
   };
 
@@ -57,9 +68,11 @@ export default function Search(props: { param: string }) {
         </ul>
       )}
 
-      {searchResults && param === "meals" && (
+      {Array.isArray(mealSearchResults) && param === "meals" && (
         <ul>
-          <MealResults results={searchResults} />
+          {mealSearchResults.map((meal: MEALSINTERFACE) => (
+            <MealResults key={meal.id} meal={meal} />
+          ))}
         </ul>
       )}
     </section>
