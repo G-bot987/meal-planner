@@ -5,14 +5,12 @@ import AddMealStepper from "../addMealStepper/AddMealStepper";
 interface mealInterface {
   meal: string;
   index: number;
+  toggleMealStepper: any;
 }
 export default function Row(props: mealInterface) {
-  const { meal, index } = props;
+  const { meal, index, toggleMealStepper } = props;
   const [logged, setLogged] = useState(false);
-  const [showAddMenu, setShowAddmenu] = useState(false);
-  const toggleMealStepper = useCallback(() => {
-    setShowAddmenu((prevState: boolean) => !prevState);
-  }, []);
+
   return (
     <>
       <tr>
@@ -30,15 +28,12 @@ export default function Row(props: mealInterface) {
           >
             add
           </button>
-          {showAddMenu && (
-            <AddMealStepper toggleMealStepper={toggleMealStepper} />
-          )}
         </td>
       </tr>
       {logged && (
         <tr>
           <td>logged</td>
-          <td>quack</td>
+          <td>data</td>
         </tr>
       )}
     </>
