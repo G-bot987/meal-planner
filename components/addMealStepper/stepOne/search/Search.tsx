@@ -58,18 +58,16 @@ export default function Search(props: { param: string }) {
         onChange={handleInput}
         placeholder={`search ${param}`}
       />
-
       <button className={styles.form__submit}> search </button>
       {Array.isArray(searchResults) && param === "foods" && (
-        <ul>
+        <ul className={styles.form__results}>
           {searchResults.map((food: FOODINTERFACE) => (
             <FoodResults key={food.id} food={food} />
           ))}
         </ul>
       )}
-
       {Array.isArray(mealSearchResults) && param === "meals" && (
-        <ul>
+        <ul className={styles.formform__results}>
           {mealSearchResults.map((meal: MEALSINTERFACE) => (
             <MealResults key={meal.id} meal={meal} />
           ))}
