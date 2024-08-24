@@ -3,6 +3,8 @@
     padding: 0rem 3rem;
 }
 
+
+
 .button__wrapper{
     width: 100%;
     display: flex;
@@ -28,5 +30,8 @@
 
     &__submit{
         width: 50%;
+    }
+    &__results{
+        color: var(--text-color);
     }
 }

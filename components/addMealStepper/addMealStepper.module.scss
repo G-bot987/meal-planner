@@ -11,6 +11,7 @@
     align-items: center;
     &__header{
         text-align: center;
+        color:var(--text-color) ;
 
     }
     &__stepper__list{
@@ -23,5 +24,13 @@
 
     &__button{
 
-    }
+    }    
+}
+
+.step__two{
+    color: var(--text-color);
+}
+
+.step__three{
+    color: var(--text-color);
 }
