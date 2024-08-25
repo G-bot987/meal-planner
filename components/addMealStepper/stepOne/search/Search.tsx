@@ -67,7 +67,7 @@ export default function Search(props: { param: string }) {
         </ul>
       )}
       {Array.isArray(mealSearchResults) && param === "meals" && (
-        <ul className={styles.formform__results}>
+        <ul className={styles.form__results}>
           {mealSearchResults.map((meal: MEALSINTERFACE) => (
             <MealResults key={meal.id} meal={meal} />
           ))}
