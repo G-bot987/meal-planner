@@ -44,3 +44,7 @@ if you struggle to out the connection string see above or reach out to me here o
 - TypeScript
 - zustland
 - jest
+
+
+
+versions on data base for meals, 
