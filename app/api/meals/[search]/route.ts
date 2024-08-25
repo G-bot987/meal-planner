@@ -1,26 +1,12 @@
 
-import prisma from '@/lib/prisma'
 import { NextResponse } from 'next/server'
+import { searchMeals } from '../../services/meal';
 
 export async function GET(request: Request, context:any) {
 
     const {params} = context;
 
-   const data = await prisma.meal.findMany({
-        where: {
-          name: {
-            contains: params.search ,
-            mode: 'insensitive'
-          },
-        },
-        include: {
-            foods:{
-                include:{
-                    food: true
-                }
-            }
-          },
-      })
+    const data = await searchMeals(params.search)
 
     return NextResponse.json(data)  
 }
