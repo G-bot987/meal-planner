@@ -11,6 +11,7 @@ import AddMealStepper from "../addMealStepper/AddMealStepper";
 import styles from "./diary.module.scss";
 
 import { useCallback, useEffect, useState } from "react";
+import useStore from "@/zustland/store/store";
 
 export default function MobileDiary() {
   const currentDay = getCurrentDay();
@@ -18,6 +19,9 @@ export default function MobileDiary() {
   const [getAnotherDay, setGetAnotherDay] = useState(0);
   const meals = ["morning", "lunch", "evening", "post work out", "snacks"];
   const [showAddMenu, setShowAddmenu] = useState(false);
+
+  const choosenIndex = useStore((state) => state.mealIndex);
+  const choosenMeal = meals[choosenIndex];
 
   useEffect(() => {
     if (getAnotherDay > 0) {
@@ -107,7 +111,11 @@ export default function MobileDiary() {
           </button>
         </>
       ) : (
-        <AddMealStepper toggleMealStepper={toggleMealStepper} day={day} />
+        <AddMealStepper
+          toggleMealStepper={toggleMealStepper}
+          day={day}
+          meal={choosenMeal}
+        />
       )}
     </section>
   );

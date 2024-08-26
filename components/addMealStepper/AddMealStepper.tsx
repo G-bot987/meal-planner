@@ -7,6 +7,7 @@ import StepThree from "./StepThree";
 interface STEPPERINTERFACE {
   toggleMealStepper: () => void;
   day: DAYINTERFACE;
+  meal: string;
 }
 interface DAYINTERFACE {
   date: string;
@@ -14,7 +15,7 @@ interface DAYINTERFACE {
 }
 
 export default function AddMealStepper(props: STEPPERINTERFACE) {
-  const { toggleMealStepper, day } = props;
+  const { toggleMealStepper, day, meal } = props;
   const [step, setStep] = useState(0);
   const changeStep = useCallback((step: number) => {
     setStep(step);
@@ -27,7 +28,9 @@ export default function AddMealStepper(props: STEPPERINTERFACE) {
   ];
   return (
     <section className={styles.stepper__modal}>
-      <h1 className={styles.stepper__modal__header}>{day.date} adding</h1>
+      <h1 className={styles.stepper__modal__header}>
+        {day.date} adding {meal}
+      </h1>
       <ul className={styles.stepper__modal__stepper__list}>
         <li>
           <button onClick={() => changeStep(0)}>search</button>
