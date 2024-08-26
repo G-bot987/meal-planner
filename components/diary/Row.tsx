@@ -2,6 +2,8 @@ import { useCallback, useState } from "react";
 import styles from "./diary.module.scss";
 import AddMealStepper from "../addMealStepper/AddMealStepper";
 
+import useStore from "@/zustland/store/store";
+
 interface mealInterface {
   meal: string;
   index: number;
@@ -10,6 +12,8 @@ interface mealInterface {
 export default function Row(props: mealInterface) {
   const { meal, index, toggleMealStepper } = props;
   const [logged, setLogged] = useState(false);
+
+  const { setIndex } = useStore();
 
   return (
     <>
@@ -23,7 +27,10 @@ export default function Row(props: mealInterface) {
         </td>
         <td>
           <button
-            onClick={toggleMealStepper}
+            onClick={() => {
+              toggleMealStepper();
+              setIndex(index);
+            }}
             className={styles.table__wrapper__table__meal__row__btn}
           >
             add
