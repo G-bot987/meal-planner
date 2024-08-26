@@ -5,12 +5,12 @@ import {
   getTYesterdayDay,
   getTomorrowDay,
 } from "@/utils/getDay";
+import Row from "./Row";
+import AddMealStepper from "../addMealStepper/AddMealStepper";
 
 import styles from "./diary.module.scss";
 
 import { useCallback, useEffect, useState } from "react";
-import Row from "./Row";
-import AddMealStepper from "../addMealStepper/AddMealStepper";
 
 export default function MobileDiary() {
   const currentDay = getCurrentDay();
