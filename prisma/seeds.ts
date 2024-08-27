@@ -74,18 +74,83 @@ async function createMeals() {
           user_id: 1,
           foods: {
             create: [
+              { food: { connect: { id: 2 } }, assigned_by: 'admin' },
               { food: { connect: { id: 3 } }, assigned_by: 'admin' },
-              { food: { connect: { id: 4 } }, assigned_by: 'admin' },
+            ],
+          },
+        },
+      });
+      await prisma.meal.upsert({
+        where: { id: 2 },
+        update: {}, 
+        create: {
+          name: 'store bought pizza',
+          user_id: 1,
+          calories:        750,
+          fat      :        120,
+          protein   : 20,
+                 
+          carbohydrates:    300,
+          fibre         :   6,
+          sugar          :  30,
+          weight          :700,
+          portion          :'one slice',
+          foods: {
+            create: [
+
             ],
           },
         },
       });
 }
 
+
+async function createNewMealVersion() {
+  const originalMealId = 2; 
+
+  const originalMeal = await prisma.meal.findUnique({
+    where: { id: originalMealId },
+  });
+
+  if (!originalMeal) {
+    console.error('Original meal not found');
+    return;
+  }
+
+  const highestVersion = originalMeal.version;
+  const newVersionNumber = highestVersion + 1;
+
+  await prisma.meal.create({
+    data: {
+      name:`new ${originalMeal.name}`,
+      version: newVersionNumber,
+      original_meal_id: originalMeal.id,
+      calories:        900,
+      fat      :        70,
+      protein   : 20,
+             
+      carbohydrates:    500,
+      fibre         :   6,
+      sugar          :  60,
+      weight          :500,
+      foods: {
+        create: [
+
+        ]
+      },
+      user_id: originalMeal.user_id ,
+    },
+  });
+
+  console.log(`Created a new version of meal ${originalMeal.id} with version ${newVersionNumber}`);
+}
+
+
 async function main() {
     // createFoods()
     // createUser()
-    createMeals()
+    // createMeals()
+    createNewMealVersion()
 }
 
 main()
