@@ -88,15 +88,27 @@ model food {
 }
 
 model meal {
-  id           Int              @id @default(autoincrement())
-  name         String
-  foods        foods_in_meals[]
-  user_creator user             @relation(fields: [user_id], references: [id])
-  user_id      Int
-  created_at   DateTime         @default(now())
-  updated_at   DateTime         @updatedAt
-  deleted_at   DateTime?
-  logged_meals logged_meals[]   @relation("LoggedMealsToMeal")
+  id               Int              @id @default(autoincrement())
+  name             String
+  foods            foods_in_meals[]
+  user_creator     user             @relation(fields: [user_id], references: [id])
+  user_id          Int
+  created_at       DateTime         @default(now())
+  updated_at       DateTime         @updatedAt
+  deleted_at       DateTime?
+  calories         Float
+  fat              Float
+  protein          Float
+  carbohydrates    Float
+  fibre            Float
+  sugar            Float
+  weight           Float
+  portion          String
+  version          Int              @default(1) 
+  original_meal_id Int? 
+  original_meal    meal?            @relation("MealVersions", fields: [original_meal_id], references: [id])
+  archived_meals   meal[]           @relation("MealVersions") // Reverse relation to fetch archived versions
+  logged_meals     logged_meals[]   @relation("LoggedMealsToMeal")
 }
 
 model foods_in_meals {
