@@ -96,14 +96,14 @@ model meal {
   created_at       DateTime         @default(now())
   updated_at       DateTime         @updatedAt
   deleted_at       DateTime?
-  calories         Float
-  fat              Float
-  protein          Float
-  carbohydrates    Float
-  fibre            Float
-  sugar            Float
-  weight           Float
-  portion          String
+  calories         Float?
+  fat              Float?
+  protein          Float?
+  carbohydrates    Float?
+  fibre            Float?
+  sugar            Float?
+  weight           Float?
+  portion          String?
   version          Int              @default(1) 
   original_meal_id Int? 
   original_meal    meal?            @relation("MealVersions", fields: [original_meal_id], references: [id])
