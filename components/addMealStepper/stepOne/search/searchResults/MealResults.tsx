@@ -5,7 +5,20 @@ interface PROPSINTERFACE {
 }
 export default function MealResults(props: PROPSINTERFACE) {
   const {
-    meal: { name },
+    meal: { name, archived_meals },
   } = props;
-  return <li>{name}</li>;
+  return (
+    <li>
+      {name}
+      {archived_meals && archived_meals.length > 0 && (
+        <ul>
+          {archived_meals.map((oldMeal: any) => (
+            <li key={oldMeal.version}>
+             a newer version {oldMeal.version} was found with name {oldMeal.name}
+            </li>
+          ))}
+        </ul>
+      )}
+    </li>
+  );
 }
