@@ -17,11 +17,23 @@ export interface FOODINTERFACE {
  export  interface MEALSINTERFACE {
     created_at: string;
     deleted_at: string | null;
-    foods: FOODSTOMEALSINTERFACE[];
+    foods?: FOODSTOMEALSINTERFACE[];
     id: number;
     name: string;
     updated_at: string;
     user_id: number;
+    archived_meals?: MEALSINTERFACE[];
+    calories?: number | null;
+    fat?: number | null;
+    protein?: number | null;
+    carbohydrates?: number | null;
+    fibre?: number | null;
+    sugar?: number | null;
+    weight?: number | null;
+    portion?: string | null;
+    version: number;
+    original_meal_id?: number | null;
+
   }
 
 
