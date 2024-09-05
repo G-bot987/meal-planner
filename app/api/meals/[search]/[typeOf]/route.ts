@@ -1,13 +1,12 @@
 
-import prisma from '@/lib/prisma'
 import { NextResponse } from 'next/server'
-import { searchFoods } from '../../services/food';
+import { searchMeals } from '../../../services/meal';
 
 export async function GET(request: Request, context:any) {
 
     const {params} = context;
 
- const data = await searchFoods(params.search)
+    const data = await searchMeals(params.search)
 
     return NextResponse.json(data)  
 }
