@@ -1,7 +1,7 @@
 
 import prisma from '@/lib/prisma'
 
-export async function searchFoods(search:string) {
+export async function globalSearchFoods(search:string) {
 
   
 
