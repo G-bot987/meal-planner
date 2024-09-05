@@ -7,8 +7,11 @@ import {
   MEALSINTERFACE,
 } from "@/utils/interfaces/mealsAndFoodsInterfaces/interfaces";
 
-export default function Search(props: { param: string }) {
-  const { param } = props;
+export default function Search(props: {
+  param: string;
+  searchType: string | boolean;
+}) {
+  const { param, searchType } = props;
   const [searchValue, setSearchValue] = useState("");
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState(null);
@@ -35,6 +38,9 @@ export default function Search(props: { param: string }) {
         setSearchResults(result);
       }
       if (param === "meals") {
+        console.log("result");
+        console.log(result);
+        console.log("--");
         setMealSearchResults(result);
       }
     } catch (error) {}
