@@ -62,8 +62,12 @@ export default function StepOne() {
         </article>
       )}
 
-      {searchMeals && <Search param="meals" searchType={searchType} />}
-      {searchFoods && <Search param="foods" searchType={searchType} />}
+      {typeof searchType === "string" && (
+        <section>
+          {searchMeals && <Search param="meals" searchType={searchType} />}
+          {searchFoods && <Search param="foods" searchType={searchType} />}
+        </section>
+      )}
     </article>
   );
 }
