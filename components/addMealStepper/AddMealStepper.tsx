@@ -43,7 +43,7 @@ export default function AddMealStepper(props: STEPPERINTERFACE) {
         </li>
       </ul>
       {steps[step]}
-      <button onClick={toggleMealStepper}>back</button>
+      <button onClick={toggleMealStepper}>back to diary</button>
     </section>
   );
 }
