@@ -29,12 +29,15 @@ export default function Search(props: {
     }
 
     try {
-      const search = await fetch(`/api/${param}/${searchQuery}`, {
+      const search = await fetch(`/api/${param}/${searchQuery}/${searchType}`, {
         method: "GET",
       });
 
       const result = await search.json();
       if (param === "foods") {
+        console.log("result");
+        console.log(result);
+        console.log("--");
         setSearchResults(result);
       }
       if (param === "meals") {
