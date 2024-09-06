@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import styles from "./diary.module.scss";
 import AddMealStepper from "../addMealStepper/AddMealStepper";
 
-import useStore from "@/zustland/store/store";
+import { useStore } from "@/zustland/store/store";
 
 interface mealInterface {
   meal: string;
