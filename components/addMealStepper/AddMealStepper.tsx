@@ -19,7 +19,7 @@ export default function AddMealStepper(props: STEPPERINTERFACE) {
   const { toggleMealStepper, day, meal } = props;
   const [step, setStep] = useState(0);
   const changeStep = useCallback((step: number) => {
-    setStep(step);
+    setStep(step), setZustlandStep(step);
   }, []);
 
   const steps = [
