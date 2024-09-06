@@ -70,7 +70,7 @@ model coach_profile {
 
 model food {
   id            Int              @id @default(autoincrement())
-  name          String           @unique @db.VarChar(255)
+  name          String
   calories      Float
   fat           Float
   protein       Float
@@ -104,8 +104,8 @@ model meal {
   sugar            Float?
   weight           Float?
   portion          String?
-  version          Int              @default(1) 
-  original_meal_id Int? 
+  version          Int              @default(1)
+  original_meal_id Int?
   original_meal    meal?            @relation("MealVersions", fields: [original_meal_id], references: [id])
   archived_meals   meal[]           @relation("MealVersions") // Reverse relation to fetch archived versions
   logged_meals     logged_meals[]   @relation("LoggedMealsToMeal")

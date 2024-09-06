@@ -7,7 +7,7 @@ const prisma = new PrismaClient()
 async function createFoods() {
     console.log('creating foods')
     await prisma.food.upsert({
-        where: { name: 'carrot' },
+        where: { id: 1 },
         update: {}, 
         create: {
           name: 'carrot',
@@ -21,7 +21,7 @@ async function createFoods() {
         },
     })
     await prisma.food.upsert({
-        where: { name: 'chicken' },
+        where: { id: 2 },
         update: {}, 
         create: {
           name: 'chicken',
@@ -35,7 +35,7 @@ async function createFoods() {
         },
     })
     await prisma.food.upsert({
-        where: { name: 'bread' },
+        where: { id: 3 },
         update: {}, 
         create: {
           name: 'bread',
@@ -53,48 +53,78 @@ async function createFoods() {
 async function createUser() {
     console.log('creating user')
     const password = await hash('test', 12)
+    // await prisma.user.upsert({
+    //     where: { email: 'test@test.com' },
+    //     update: {},
+    //     create: {
+    //       name: 'test',
+    //       password,
+    //       email: 'test@test.com'
+    //     },
+    // }),
     await prisma.user.upsert({
-        where: { email: 'test@test.com' },
-        update: {},
-        create: {
-          name: 'test',
-          password,
-          email: 'test@test.com'
-        },
-    })
+      where: { email: 'newuser@test.com' },
+      update: {},
+      create: {
+        name: 'newUser',
+        password,
+        email: 'newuser@test.com'
+      },
+  })
 }
 
 async function createMeals() {
     console.log('creating meals')
-    await prisma.meal.upsert({
-        where: { id: 1 },
-        update: {}, 
-        create: {
-          name: 'Chicken Sandwich',
-          user_id: 1,
-          foods: {
-            create: [
-              { food: { connect: { id: 2 } }, assigned_by: 'admin' },
-              { food: { connect: { id: 3 } }, assigned_by: 'admin' },
-            ],
-          },
-        },
-      });
-      await prisma.meal.upsert({
-        where: { id: 2 },
-        update: {}, 
-        create: {
-          name: 'store bought pizza',
-          user_id: 1,
-          calories:        750,
-          fat      :        120,
+    // await prisma.meal.upsert({
+    //     where: { id: 1 },
+    //     update: {}, 
+    //     create: {
+    //       name: 'Chicken Sandwich',
+    //       user_id: 1,
+    //       foods: {
+    //         create: [
+    //           { food: { connect: { id: 2 } }, assigned_by: 'admin' },
+    //           { food: { connect: { id: 3 } }, assigned_by: 'admin' },
+    //         ],
+    //       },
+    //     },
+    //   });
+    // await prisma.meal.upsert({
+    //   where: { id: 2 },
+    //   update: {}, 
+    //   create: {
+    //     name: 'store bought pizza',
+    //     user_id: 1,
+    //     calories:        750,
+    //     fat      :        120,
+    //     protein   : 20,
+               
+    //     carbohydrates:    300,
+    //     fibre         :   6,
+    //     sugar          :  30,
+    //     weight          :700,
+    //     portion          :'one slice',
+    //     foods: {
+    //       create: [
+
+    //       ],
+    //     },
+    //   },
+    // });
+      await prisma.meal.create({
+   
+        data: {
+          name: 'store bought sushi spicy chicken roles',
+          user_id: 2,
+          calories:        500,
+          fat      :        5,
           protein   : 20,
                  
-          carbohydrates:    300,
+          carbohydrates:    70,
           fibre         :   6,
           sugar          :  30,
-          weight          :700,
-          portion          :'one slice',
+          weight          :450,
+          portion          :'6 roles 1 pack',
           foods: {
             create: [
 
@@ -149,8 +179,8 @@ async function createNewMealVersion() {
 async function main() {
     // createFoods()
     // createUser()
-    // createMeals()
-    createNewMealVersion()
+    createMeals()
+    // createNewMealVersion()
 }
 
 main()
