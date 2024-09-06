@@ -11,7 +11,7 @@ import AddMealStepper from "../addMealStepper/AddMealStepper";
 import styles from "./diary.module.scss";
 
 import { useCallback, useEffect, useState } from "react";
-import useStore from "@/zustland/store/store";
+import { useStore } from "@/zustland/store/store";
 
 export default function MobileDiary() {
   const currentDay = getCurrentDay();

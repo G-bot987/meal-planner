@@ -8,11 +8,21 @@ interface StoreState {
     setIndex: (index: number) => void;
   }
 
-const useStore = create<StoreState>()(
+  interface MealStoreState {
+    step: number;
+    setStep: (index: number) => void;
+  }
+
+export const useStore = create<StoreState>()(
     devtools((set) => ({
         mealIndex: 0,
         setIndex: (index: number) => set({ mealIndex: index }), 
     }))
 );
 
-export default useStore;
+export const mealStepperStore = create<MealStoreState>()(
+    devtools((set) => ({
+        step: 0,
+        setStep: (index: number) => set({ step: index }), 
+    }))
+);

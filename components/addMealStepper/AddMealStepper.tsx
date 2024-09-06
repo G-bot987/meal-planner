@@ -1,8 +1,9 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import styles from "./addMealStepper.module.scss";
 import StepOne from "./stepOne/StepOne";
 import StepTwo from "./StepTwo";
 import StepThree from "./StepThree";
+import { mealStepperStore } from "@/zustland/store/store";
 
 interface STEPPERINTERFACE {
   toggleMealStepper: () => void;
@@ -21,11 +22,20 @@ export default function AddMealStepper(props: STEPPERINTERFACE) {
     setStep(step);
   }, []);
 
+  const x = mealStepperStore((state) => state.step);
+
   const steps = [
     <StepOne key={1} />,
     <StepTwo key={2} />,
     <StepThree key={3} />,
   ];
+
+  const nextStep = mealStepperStore((state) => state.step);
+
+  useEffect(() => {
+    setStep(nextStep);
+  }, [nextStep]);
+
   return (
     <section className={styles.stepper__modal}>
       <h1 className={styles.stepper__modal__header}>
