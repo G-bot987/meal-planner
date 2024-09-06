@@ -1,6 +1,6 @@
 import { FOODINTERFACE } from "@/utils/interfaces/mealsAndFoodsInterfaces/interfaces";
-import { mealStepperStore } from "@/zustland/store/store";
-import React from "react";
+import { choosenFoodOrMeal, mealStepperStore } from "@/zustland/store/store";
+import React, { useEffect } from "react";
 
 interface PROPSINTERFACE {
   food: FOODINTERFACE;
@@ -8,14 +8,16 @@ interface PROPSINTERFACE {
 export default function FoodResults(props: PROPSINTERFACE) {
   const { food } = props;
   const { name } = food;
-  const { setStep } = mealStepperStore();
+  const { setZustlandStep } = mealStepperStore();
+  const { setFood } = choosenFoodOrMeal();
 
   return (
     <li>
       {name}
       <button
         onClick={() => {
-          setStep(1);
+          setZustlandStep(1);
+          setFood(food);
         }}
       >
         select food
