@@ -1,10 +1,14 @@
 import { NextResponse } from 'next/server'
-import { globalSearchFoods } from '../../../services/food';
+import { globalSearchFoods, personalSearchFoods } from '../../../services/food';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/utils/authOptions';
 
 export async function GET(request: Request, context: { params: { typeOf: string, search: string } }) {
 
     const {params:{typeOf, search}} = context;
 
+    const session = await getServerSession(authOptions);
+    const id = session?.user.id
 
 try {
     switch (typeOf) {
@@ -12,8 +16,8 @@ try {
             const data = await globalSearchFoods(search)
             return   NextResponse.json(data)  
         case 'personal':
-            console.log('personal search')
-            return   NextResponse.json('data coming soon')
+            const personalData = await personalSearchFoods(search, id)
+            return   NextResponse.json(personalData)
         default:
             return NextResponse.json({ message: 'Invalid search type' }, { status: 400 });  
       }
