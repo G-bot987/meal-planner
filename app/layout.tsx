@@ -4,7 +4,11 @@ import { Inter } from "next/font/google";
 import { Providers } from "../utils/providers";
 import "@/styles/reset.scss";
 import "@/styles/global.scss";
-import { useStore, mealStepperStore } from "@/zustland/store/store"; // need this to initiate zustland globally
+import {
+  useStore,
+  mealStepperStore,
+  choosenFoodOrMeal,
+} from "@/zustland/store/store"; // need this to initiate zustland globally
 
 const inter = Inter({ subsets: ["latin"] });
 
