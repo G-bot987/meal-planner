@@ -26,7 +26,6 @@ export async function personalSearchFoods(search:string, id:string|undefined) {
       if (isNaN(idAsInt)) {
             return 'Invalid user ID';
           }
-          console.log(idAsInt)
       const data = await prisma.food.findMany({
         where: {
           name: {
