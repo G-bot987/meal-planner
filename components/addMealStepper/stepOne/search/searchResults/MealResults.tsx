@@ -9,7 +9,7 @@ export default function MealResults(props: PROPSINTERFACE) {
   const {
     meal: { name, archived_meals },
   } = props;
-  const { setStep } = mealStepperStore();
+  const { setZustlandStep } = mealStepperStore();
 
   return (
     <li>
@@ -17,7 +17,7 @@ export default function MealResults(props: PROPSINTERFACE) {
 
       <button
         onClick={() => {
-          setStep(1);
+          setZustlandStep(1);
         }}
       >
         select meal
