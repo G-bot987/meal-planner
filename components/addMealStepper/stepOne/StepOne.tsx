@@ -79,7 +79,7 @@ export default function StepOne() {
       )}
 
       {createNew && (
-        <article>
+        <article className={styles.step__one__wrapper__add__new__wrapper}>
           <button
             onClick={() => {
               setCreateNew(!createNew);
