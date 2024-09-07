@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import styles from "./addMealStepper.module.scss";
 import StepOne from "./stepOne/StepOne";
 import StepTwo from "./StepTwo";
@@ -17,14 +17,16 @@ interface DAYINTERFACE {
 
 export default function AddMealStepper(props: STEPPERINTERFACE) {
   const { toggleMealStepper, day, meal } = props;
-  const [step, setStep] = useState(0);
+  //global state
   const food = choosenFoodOrMeal((state) => state.food);
+  const { setStepForMealStepper } = mealStepperStore();
+  const choosenStep = mealStepperStore((state) => state.step);
 
   const changeStep = useCallback(
     (step: number) => {
       switch (true) {
         case food !== undefined && food !== null:
-          setStep(step), setZustlandStep(step);
+          setStepForMealStepper(step);
           break;
         default:
           console.log("food not set");
@@ -40,17 +42,9 @@ export default function AddMealStepper(props: STEPPERINTERFACE) {
     <StepThree key={3} />,
   ];
 
-  const { setZustlandStep } = mealStepperStore();
-
   useEffect(() => {
-    setZustlandStep(0);
+    setStepForMealStepper(0);
   }, []);
-
-  const nextStep = mealStepperStore((state) => state.step);
-
-  useEffect(() => {
-    setStep(nextStep);
-  }, [nextStep]);
 
   return (
     <section className={styles.stepper__modal}>
@@ -68,7 +62,7 @@ export default function AddMealStepper(props: STEPPERINTERFACE) {
           <button onClick={() => changeStep(2)}>add</button>
         </li>
       </ul>
-      {steps[step]}
+      {steps[choosenStep]}
       <button onClick={toggleMealStepper}>back to diary</button>
     </section>
   );
