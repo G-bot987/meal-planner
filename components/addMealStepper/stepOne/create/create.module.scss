@@ -5,23 +5,36 @@
     flex-direction: column;
     justify-content: center;
     align-items:center ;
-    &__header{
-        text-align: center;
-        text-transform: uppercase;
-    }
-    &__btn__wrapper{
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        width: 100%;
-        padding: 3rem 3rem;
-        &__btn{
-            width: 3.5rem;
-            text-transform: uppercase;
-            padding: 0.25rem;
-            text-align: center;
 
+
+
+    &__question__wrapper{
+   
+        padding: 3rem 0rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items:center ;
+
+        &__header{
+            text-align: center;
+            text-transform: uppercase;
+            width: 100%;
+        }
+        &__btn__wrapper{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 3rem 3rem;
+            &__btn{
+                width: 3.5rem;
+                text-transform: uppercase;
+                padding: 0.25rem;
+                text-align: center;
+    
+            }
         }
     }
 }
