@@ -10,7 +10,7 @@ interface StoreState {
 
   interface MealStoreState {
     step: number;
-    setZustlandStep: (index: number) => void;
+    setStepForMealStepper: (index: number) => void;
   }
 
 export const useStore = create<StoreState>()(
@@ -23,7 +23,7 @@ export const useStore = create<StoreState>()(
 export const mealStepperStore = create<MealStoreState>()(
     devtools((set) => ({
         step: 0,
-        setZustlandStep: (step: number) => set({ step }), 
+        setStepForMealStepper: (step: number) => set({ step }), 
     }))
 );
 

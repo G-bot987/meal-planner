@@ -8,7 +8,7 @@ interface PROPSINTERFACE {
 export default function FoodResults(props: PROPSINTERFACE) {
   const { food } = props;
   const { name } = food;
-  const { setZustlandStep } = mealStepperStore();
+  const { setStepForMealStepper } = mealStepperStore();
   const { setFood } = choosenFoodOrMeal();
 
   return (
@@ -16,7 +16,7 @@ export default function FoodResults(props: PROPSINTERFACE) {
       {name}
       <button
         onClick={() => {
-          setZustlandStep(1);
+          setStepForMealStepper(1);
           setFood(food);
         }}
       >
