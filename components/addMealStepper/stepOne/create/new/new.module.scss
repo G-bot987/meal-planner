@@ -12,12 +12,13 @@
         flex-direction: column;
         justify-content: center;
         align-items:center ;
+        width: 100%;
         &__header{
             text-align: center;
             text-transform: uppercase;
             width: 100%;
         }
-        &__btn__wrapper{
+        &__new__btn__wrapper{
             display: flex;
             flex-direction: row;
             align-items: center;
@@ -29,8 +30,7 @@
                 text-transform: uppercase;
                 padding: 0.25rem;
                 text-align: center;
-    
-            }
+            } 
         }
     }
 }
