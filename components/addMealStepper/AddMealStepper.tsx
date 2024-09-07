@@ -20,16 +20,19 @@ export default function AddMealStepper(props: STEPPERINTERFACE) {
   const [step, setStep] = useState(0);
   const food = choosenFoodOrMeal((state) => state.food);
 
-  const changeStep = useCallback((step: number) => {
-    switch (true) {
-      case food !== undefined && food !== null:
-        setStep(step), setZustlandStep(step);
-        break;
-      default:
-        console.log("food not set");
-        break;
-    }
-  }, []);
+  const changeStep = useCallback(
+    (step: number) => {
+      switch (true) {
+        case food !== undefined && food !== null:
+          setStep(step), setZustlandStep(step);
+          break;
+        default:
+          console.log("food not set");
+          break;
+      }
+    },
+    [food]
+  );
 
   const steps = [
     <StepOne key={1} />,
