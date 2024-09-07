@@ -18,8 +18,17 @@ interface DAYINTERFACE {
 export default function AddMealStepper(props: STEPPERINTERFACE) {
   const { toggleMealStepper, day, meal } = props;
   const [step, setStep] = useState(0);
+  const food = choosenFoodOrMeal((state) => state.food);
+
   const changeStep = useCallback((step: number) => {
-    setStep(step), setZustlandStep(step);
+    switch (true) {
+      case food !== undefined && food !== null:
+        setStep(step), setZustlandStep(step);
+        break;
+      default:
+        console.log("food not set");
+        break;
+    }
   }, []);
 
   const steps = [
