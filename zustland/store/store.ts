@@ -16,7 +16,6 @@ import { devtools } from "zustand/middleware";
 
     type New = {
     entry: entry
-    currentStep: number
     add: (property: Partial<entry>) => void;
   }
   
@@ -52,7 +51,6 @@ export const choosenFoodOrMeal = create<any>()(
 
 export const createNewStore = create<New>()(
     devtools((set) => ({
-        currentStep: 0,
         entry: {
             type: null,
             name: null,
