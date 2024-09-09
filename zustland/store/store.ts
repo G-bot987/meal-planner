@@ -15,8 +15,10 @@ import { devtools } from "zustand/middleware";
 
 
     type New = {
+      step: number,
     entry: entry
     add: (property: Partial<entry>) => void;
+    changeStep: (index: number) => void;
   }
   
   type entry = {
@@ -51,6 +53,7 @@ export const choosenFoodOrMeal = create<any>()(
 
 export const createNewStore = create<New>()(
     devtools((set) => ({
+      step: 0,
         entry: {
             type: null,
             name: null,
@@ -61,5 +64,6 @@ export const createNewStore = create<New>()(
           cloneState.entry = {...cloneState.entry, ...property};
           return cloneState;
         }),
+        changeStep: (step: number) => set({ step }), 
     }))
 );

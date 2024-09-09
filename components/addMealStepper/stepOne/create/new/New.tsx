@@ -1,8 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./new.module.scss";
 import NewFood from "./food/NewFood";
+import NewFoodNutrition from "./food/nutrition/NewFoodNutrition";
+import SubmissionScreen from "./submission/SubmissionScreen";
+import { createNewStore } from "@/zustland/store/store";
 export default function New() {
   const [creatingNew, setCreatingNew] = useState<string | null>(null);
+  const step = createNewStore((state) => state.step);
+  const { changeStep } = createNewStore();
+  useEffect(() => {
+    changeStep(0);
+  }, []);
+
+  const steps = [
+    <NewFood key={1} />,
+    <NewFoodNutrition key={2} />,
+    <SubmissionScreen key={3} />,
+  ];
 
   return (
     <article className={styles.create__wrapper}>
@@ -39,7 +53,7 @@ export default function New() {
           </section>
         </article>
       )}
-      {creatingNew === "food" && <NewFood />}
+      {creatingNew === "food" && steps[step]}
     </article>
   );
 }
