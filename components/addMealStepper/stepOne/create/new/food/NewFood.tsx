@@ -5,10 +5,11 @@ import { createNewStore } from "@/zustland/store/store";
 export default function NewFood() {
   const [searchValue, setSearchValue] = useState("");
   const [submit, setSubmit] = useState(false);
-  const { add } = createNewStore();
+  const { add, changeStep } = createNewStore();
 
   const handleSearch = (searchQuery: string) => {
     add({ name: `${searchQuery}` });
+    changeStep(1);
   };
 
   useEffect(() => {
