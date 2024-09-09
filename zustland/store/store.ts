@@ -1,8 +1,6 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
-
-
     interface StoreState {
     mealIndex: number;
     setIndex: (index: number) => void;
@@ -49,7 +47,6 @@ export const choosenFoodOrMeal = create<any>()(
         clearStore: () => set({ food: null }), 
     }))
 );
-
 
 export const createNewStore = create<New>()(
     devtools((set) => ({
