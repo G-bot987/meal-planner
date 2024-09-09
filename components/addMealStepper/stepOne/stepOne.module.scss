@@ -11,7 +11,9 @@
     justify-content: space-between;
     height: 25vh;
     padding: 2rem 0rem;
-    &__btn{}
+    &__btn{
+        text-transform: uppercase;
+    }
    } 
    &__add__new__wrapper{
     display: flex;
@@ -19,6 +21,9 @@
     align-items: center;
     justify-content: center;
     padding: 3rem 0rem;
+    &__btn{
+        text-transform: uppercase;
+    }
    }
 }
 
@@ -28,6 +33,9 @@
     flex-direction: column;
     justify-content: center;
     padding: 3rem 0rem;
+    &__btn{
+        text-transform: uppercase;
+    }
     &__button__wrapper{
         width: 100%;
         display: flex;

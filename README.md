@@ -29,7 +29,7 @@ if you struggle to out the connection string see above or reach out to me here o
 
 1. npm i or your package manager of choice
 2. `npx prisma generate`
-3. `npx prisma migrate dev --"MIGRATIONNAME"`
+3. `npx prisma migrate deploy"`
 4. `npx prisma db seed`
 5. start app with `npm run dev`
 
@@ -44,7 +44,3 @@ if you struggle to out the connection string see above or reach out to me here o
 - TypeScript
 - zustland
 - jest
-
-
-
-versions on data base for meals, 

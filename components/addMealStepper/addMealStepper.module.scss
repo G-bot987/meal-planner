@@ -9,6 +9,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-family: "darker-grotesque";
+    font-weight: 600;
+    font-style: normal;
+    color: var(--text-color);
+    text-transform: uppercase;
     &__header{
         text-align: center;
         color:var(--text-color) ;
@@ -20,10 +25,13 @@
         align-items: center;
         justify-content: space-around;
         width: 80%;
+        &__btn{
+            text-transform: uppercase;
+        }
     }
-
     &__button{
-
+        text-transform: uppercase;
+        padding: 0.5rem;
     }    
 }
 
