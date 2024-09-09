@@ -71,12 +71,12 @@ model coach_profile {
 model food {
   id            Int              @id @default(autoincrement())
   name          String
-  calories      Float
-  fat           Float
-  protein       Float
-  carbohydrates Float
-  fibre         Float
-  sugar         Float
+  calories      Float?
+  fat           Float?
+  protein       Float?
+  carbohydrates Float?
+  fibre         Float?
+  sugar         Float?
   weight        Float
   meals         foods_in_meals[]
   created_at    DateTime         @default(now())
