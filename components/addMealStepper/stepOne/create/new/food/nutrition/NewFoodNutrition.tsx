@@ -58,7 +58,7 @@ export default function NewFoodNutrition() {
             className={styles.wrapper__form__field__wrapper__label}
             htmlFor="calories"
           >
-            calories{" "}
+            calories
           </label>
           <input
             type="text"
@@ -88,7 +88,7 @@ export default function NewFoodNutrition() {
             className={styles.wrapper__form__field__wrapper__label}
             htmlFor="fat"
           >
-            fat{" "}
+            fat
           </label>
           <input
             type="text"
@@ -103,7 +103,7 @@ export default function NewFoodNutrition() {
             className={styles.wrapper__form__field__wrapper__label}
             htmlFor="fibre"
           >
-            fibre{" "}
+            fibre
           </label>
           <input
             type="text"
@@ -118,7 +118,7 @@ export default function NewFoodNutrition() {
             className={styles.wrapper__form__field__wrapper__label}
             htmlFor="protein"
           >
-            protein{" "}
+            protein
           </label>
           <input
             type="text"
@@ -133,7 +133,7 @@ export default function NewFoodNutrition() {
             className={styles.wrapper__form__field__wrapper__label}
             htmlFor="sugar"
           >
-            sugar{" "}
+            sugar
           </label>
           <input
             type="text"
@@ -148,7 +148,7 @@ export default function NewFoodNutrition() {
             className={styles.wrapper__form__field__wrapper__label}
             htmlFor="weight"
           >
-            weight{" "}
+            weight in grams
           </label>
           <input
             type="text"
