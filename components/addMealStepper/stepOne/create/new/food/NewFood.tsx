@@ -24,18 +24,19 @@ export default function NewFood() {
   };
   return (
     <section>
-      <h1>give your food a name</h1>
-
       <section className={styles.form}>
-        <label htmlFor="foodName">give your food a name </label>
+        <label className={styles.form__label} htmlFor="foodName">
+          give your food a name
+        </label>
         <input
           type="text"
+          className={styles.form__input}
           value={searchValue}
           placeholder={`food name`}
           onChange={handleInput}
         />
         <button
-          className={styles.form__submit}
+          className={styles.form__btn}
           onClick={() => {
             setSubmit(!submit);
           }}
