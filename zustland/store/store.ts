@@ -39,7 +39,6 @@ export const mealStepperStore = create<MealStoreState>()(
     }))
 );
 
-
 export const choosenFoodOrMeal = create<any>()(
     devtools((set) => ({
         food: null,
