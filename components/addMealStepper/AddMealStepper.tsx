@@ -53,17 +53,37 @@ export default function AddMealStepper(props: STEPPERINTERFACE) {
       </h1>
       <ul className={styles.stepper__modal__stepper__list}>
         <li>
-          <button onClick={() => changeStep(0)}>search</button>
+          <button
+            className={styles.stepper__modal__stepper__list__btn}
+            onClick={() => changeStep(0)}
+          >
+            search
+          </button>
         </li>
         <li>
-          <button onClick={() => changeStep(1)}>check nutrition</button>
+          <button
+            className={styles.stepper__modal__stepper__list__btn}
+            onClick={() => changeStep(1)}
+          >
+            check nutrition
+          </button>
         </li>
         <li>
-          <button onClick={() => changeStep(2)}>add</button>
+          <button
+            className={styles.stepper__modal__stepper__list__btn}
+            onClick={() => changeStep(2)}
+          >
+            add
+          </button>
         </li>
       </ul>
       {steps[choosenStep]}
-      <button onClick={toggleMealStepper}>back to diary</button>
+      <button
+        className={styles.stepper__modal__button}
+        onClick={toggleMealStepper}
+      >
+        back to diary
+      </button>
     </section>
   );
 }
