@@ -21,6 +21,7 @@ export default function StepOne() {
         <section className={styles.step__one__wrapper__search__btn__wrapper}>
           {" "}
           <button
+            className={styles.step__one__wrapper__search__btn__wrapper__btn}
             onClick={() => {
               setSearchType("personal");
             }}
@@ -28,6 +29,7 @@ export default function StepOne() {
             search your meals and foods
           </button>
           <button
+            className={styles.step__one__wrapper__search__btn__wrapper__btn}
             onClick={() => {
               setSearchType("global");
             }}
@@ -35,6 +37,7 @@ export default function StepOne() {
             search all meals and foods
           </button>
           <button
+            className={styles.step__one__wrapper__search__btn__wrapper__btn}
             onClick={() => {
               setCreateNew(!createNew);
             }}
@@ -46,6 +49,7 @@ export default function StepOne() {
       {searchType && (
         <article className={styles.search__wrapper}>
           <button
+            className={styles.search__wrapper__btn}
             onClick={() => {
               setSearchType(false);
             }}
@@ -81,6 +85,7 @@ export default function StepOne() {
       {createNew && (
         <article className={styles.step__one__wrapper__add__new__wrapper}>
           <button
+            className={styles.step__one__wrapper__add__new__wrapper__btn}
             onClick={() => {
               setCreateNew(!createNew);
             }}
