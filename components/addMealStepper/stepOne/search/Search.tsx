@@ -35,15 +35,9 @@ export default function Search(props: {
 
       const result = await search.json();
       if (param === "foods") {
-        console.log("result");
-        console.log(result);
-        console.log("--");
         setSearchResults(result);
       }
       if (param === "meals") {
-        console.log("result");
-        console.log(result);
-        console.log("--");
         setMealSearchResults(result);
       }
     } catch (error) {}
