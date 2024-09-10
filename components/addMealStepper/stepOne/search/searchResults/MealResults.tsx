@@ -1,5 +1,5 @@
 import { MEALSINTERFACE } from "@/utils/interfaces/mealsAndFoodsInterfaces/interfaces";
-import { mealStepperStore } from "@/zustland/store/store";
+import { createNewStore } from "@/zustland/store/store";
 import React from "react";
 import ArchivedMeals from "./archivedMeals/ArchivedMeals";
 interface PROPSINTERFACE {
@@ -9,7 +9,7 @@ export default function MealResults(props: PROPSINTERFACE) {
   const {
     meal: { name, archived_meals },
   } = props;
-  const { setStepForMealStepper } = mealStepperStore();
+  const { changeStep } = createNewStore();
 
   return (
     <li>
@@ -17,7 +17,7 @@ export default function MealResults(props: PROPSINTERFACE) {
 
       <button
         onClick={() => {
-          setStepForMealStepper(1);
+          changeStep(1);
         }}
       >
         select meal
