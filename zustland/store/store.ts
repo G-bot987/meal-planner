@@ -6,12 +6,6 @@ import { devtools } from "zustand/middleware";
     setIndex: (index: number) => void;
     }
 
-  interface MealStoreState {
-    step: number;
-    setStepForMealStepper: (index: number) => void;
-  }
-
-
     type New = {
       step: number,
     entry: entry
@@ -35,13 +29,6 @@ export const useStore = create<StoreState>()(
     devtools((set) => ({
         mealIndex: 0,
         setIndex: (index: number) => set({ mealIndex: index }), 
-    }))
-);
-
-export const mealStepperStore = create<MealStoreState>()(
-    devtools((set) => ({
-        step: 0,
-        setStepForMealStepper: (step: number) => set({ step }), 
     }))
 );
 
