@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import styles from "./newFoodNutrition.module.scss";
 import { createNewStore } from "@/zustland/store/store";
 interface FORMDATA {
@@ -21,6 +21,8 @@ export default function NewFoodNutrition() {
     sugar: "",
     weight: "",
   });
+  // this was envoked as null but caused a typing error as when a initial error msg is sent in the previous state is not iteratable if it is null error was: Type 'string[] | null' must have a '[Symbol.iterator]()' method that returns an iterator.ts(2488)
+  const [error, setError] = useState<string[]>([]);
 
   const { add, changeStep } = createNewStore();
 
@@ -37,7 +39,25 @@ export default function NewFoodNutrition() {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
+    const regex = /^\d+(\.\d+)?$/;
+    for (const [key, value] of Object.entries(formData)) {
+      console.log(`${key}: ${value}`);
+      const test = regex.test(value);
+      if (!test) {
+        // passing in previous state and spreading otherwise previous error msgs are removed on update
+        setError((prevItems) => [
+          ...prevItems,
+          `${key} is not a positive number you can only use numbers like 1,4,5 or 0.35 do not include measurement units in your food nutrition all measurements should be in grams`,
+        ]);
+      } else {
+        setError([]);
+        const number = parseFloat(value);
+        add({ [key]: number });
+        changeStep(2);
+      }
+    }
   };
+
   return (
     <article className={styles.wrapper}>
       <button
@@ -64,6 +84,7 @@ export default function NewFoodNutrition() {
             type="text"
             className={styles.wrapper__form__field__wrapper__input}
             value={formData.calories}
+            name="calories"
             onChange={handleChange}
             placeholder={`calories`}
           />
@@ -77,6 +98,7 @@ export default function NewFoodNutrition() {
           </label>
           <input
             type="text"
+            name="carbohydrates"
             className={styles.wrapper__form__field__wrapper__input}
             value={formData.carbohydrates}
             onChange={handleChange}
@@ -92,6 +114,7 @@ export default function NewFoodNutrition() {
           </label>
           <input
             type="text"
+            name="fat"
             className={styles.wrapper__form__field__wrapper__input}
             value={formData.fat}
             onChange={handleChange}
@@ -107,6 +130,7 @@ export default function NewFoodNutrition() {
           </label>
           <input
             type="text"
+            name="fibre"
             className={styles.wrapper__form__field__wrapper__input}
             value={formData.fibre}
             onChange={handleChange}
@@ -123,6 +147,7 @@ export default function NewFoodNutrition() {
           <input
             type="text"
             className={styles.wrapper__form__field__wrapper__input}
+            name="protein"
             value={formData.protein}
             onChange={handleChange}
             placeholder={`protein`}
@@ -137,6 +162,7 @@ export default function NewFoodNutrition() {
           </label>
           <input
             type="text"
+            name="sugar"
             className={styles.wrapper__form__field__wrapper__input}
             value={formData.sugar}
             onChange={handleChange}
@@ -152,6 +178,7 @@ export default function NewFoodNutrition() {
           </label>
           <input
             type="text"
+            name="weight"
             className={styles.wrapper__form__field__wrapper__input}
             value={formData.weight}
             onChange={handleChange}
@@ -162,6 +189,13 @@ export default function NewFoodNutrition() {
           Submit
         </button>
       </form>
+      {error.length > 0 && (
+        <ul>
+          {error.map((e: string, i: number) => (
+            <li key={i}>{e}</li>
+          ))}
+        </ul>
+      )}
     </article>
   );
 }

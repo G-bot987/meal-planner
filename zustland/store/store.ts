@@ -1,8 +1,6 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
-
-
     interface StoreState {
     mealIndex: number;
     setIndex: (index: number) => void;
@@ -25,6 +23,12 @@ import { devtools } from "zustand/middleware";
     type: string|null
     name: string|null
     calories: number|null
+    carbohydrates: number|null,
+    fat: number|null,
+    fibre: number|null,
+    protein:number|null,
+    sugar: number|null,
+    weight: number|null,
   };
 
 export const useStore = create<StoreState>()(
@@ -41,7 +45,6 @@ export const mealStepperStore = create<MealStoreState>()(
     }))
 );
 
-
 export const choosenFoodOrMeal = create<any>()(
     devtools((set) => ({
         food: null,
@@ -50,7 +53,6 @@ export const choosenFoodOrMeal = create<any>()(
     }))
 );
 
-
 export const createNewStore = create<New>()(
     devtools((set) => ({
       step: 0,
@@ -58,6 +60,12 @@ export const createNewStore = create<New>()(
             type: null,
             name: null,
             calories: null,
+            carbohydrates: null,
+            fat: null,
+            fibre: null,
+            protein:null,
+            sugar: null,
+            weight: null,
         },
         add: (property: Partial<entry>) => set((state) => {
           const cloneState = {...state};

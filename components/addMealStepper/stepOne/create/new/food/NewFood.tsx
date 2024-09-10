@@ -9,6 +9,7 @@ export default function NewFood() {
 
   const handleSearch = (searchQuery: string) => {
     add({ name: `${searchQuery}` });
+    add({ type: `food` });
     changeStep(1);
   };
 
