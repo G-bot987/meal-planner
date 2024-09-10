@@ -23,7 +23,9 @@ export default function StepTwo() {
   });
   // this was envoked as null but caused a typing error as when a initial error msg is sent in the previous state is not iteratable if it is null error was: Type 'string[] | null' must have a '[Symbol.iterator]()' method that returns an iterator.ts(2488)
   const [error, setError] = useState<string[]>([]);
-  const { name } = createNewStore((state) => state.entry);
+  const { name, calories, carbohydrates, fat, fibre, protein, sugar, weight } =
+    createNewStore((state) => state.entry);
+  const { storedOnDB } = createNewStore((state) => state);
 
   const { add, changeStep } = createNewStore();
 
@@ -39,11 +41,13 @@ export default function StepTwo() {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
     const regex = /^\d+(\.\d+)?$/;
     for (const [key, value] of Object.entries(formData)) {
       console.log(`${key}: ${value}`);
       const test = regex.test(value);
+      if (storedOnDB) {
+        changeStep(2);
+      }
       if (!test) {
         // passing in previous state and spreading otherwise previous error msgs are removed on update
         setError((prevItems) => [
@@ -88,7 +92,7 @@ export default function StepTwo() {
             value={formData.calories}
             name="calories"
             onChange={handleChange}
-            placeholder={`calories`}
+            placeholder={`${calories}`}
           />
         </section>
         <section className={styles.wrapper__form__field__wrapper}>
@@ -104,7 +108,7 @@ export default function StepTwo() {
             className={styles.wrapper__form__field__wrapper__input}
             value={formData.carbohydrates}
             onChange={handleChange}
-            placeholder={`carbohydrates`}
+            placeholder={`${carbohydrates}`}
           />
         </section>
         <section className={styles.wrapper__form__field__wrapper}>
@@ -120,7 +124,7 @@ export default function StepTwo() {
             className={styles.wrapper__form__field__wrapper__input}
             value={formData.fat}
             onChange={handleChange}
-            placeholder={`fat`}
+            placeholder={`${fat}`}
           />
         </section>
         <section className={styles.wrapper__form__field__wrapper}>
@@ -136,7 +140,7 @@ export default function StepTwo() {
             className={styles.wrapper__form__field__wrapper__input}
             value={formData.fibre}
             onChange={handleChange}
-            placeholder={`fibre`}
+            placeholder={`${fibre}`}
           />
         </section>
         <section className={styles.wrapper__form__field__wrapper}>
@@ -152,7 +156,7 @@ export default function StepTwo() {
             name="protein"
             value={formData.protein}
             onChange={handleChange}
-            placeholder={`protein`}
+            placeholder={`${protein}`}
           />
         </section>
         <section className={styles.wrapper__form__field__wrapper}>
@@ -168,7 +172,7 @@ export default function StepTwo() {
             className={styles.wrapper__form__field__wrapper__input}
             value={formData.sugar}
             onChange={handleChange}
-            placeholder={`sugar`}
+            placeholder={`${sugar}`}
           />
         </section>
         <section className={styles.wrapper__form__field__wrapper}>
@@ -184,7 +188,7 @@ export default function StepTwo() {
             className={styles.wrapper__form__field__wrapper__input}
             value={formData.weight}
             onChange={handleChange}
-            placeholder={`weight`}
+            placeholder={`${weight}`}
           />
         </section>
         <button className={styles.wrapper__form__btn} type="submit">

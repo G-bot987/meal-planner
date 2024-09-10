@@ -5,9 +5,11 @@ import { createNewStore } from "@/zustland/store/store";
 export default function NewFood() {
   const [searchValue, setSearchValue] = useState("");
   const [submit, setSubmit] = useState(false);
-  const { add, changeStep } = createNewStore();
+  const { add, changeStep, clearEntry, setStoredOnDB } = createNewStore();
 
   const handleSearch = (searchQuery: string) => {
+    setStoredOnDB(false);
+    clearEntry();
     add({ name: `${searchQuery}` });
     add({ type: `food` });
     changeStep(1);

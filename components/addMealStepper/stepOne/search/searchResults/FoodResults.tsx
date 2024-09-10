@@ -8,7 +8,7 @@ interface PROPSINTERFACE {
 export default function FoodResults(props: PROPSINTERFACE) {
   const { food } = props;
   const { name } = food;
-  const { add, changeStep } = createNewStore();
+  const { add, changeStep, setStoredOnDB } = createNewStore();
 
   return (
     <li>
@@ -17,6 +17,7 @@ export default function FoodResults(props: PROPSINTERFACE) {
         onClick={() => {
           changeStep(1);
           add(food);
+          setStoredOnDB(true);
         }}
       >
         select food

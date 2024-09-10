@@ -8,9 +8,12 @@ import { devtools } from "zustand/middleware";
 
     type New = {
       step: number,
-    entry: entry
+    entry: entry,
+    storedOnDB: boolean,
     add: (property: Partial<entry>) => void;
     changeStep: (index: number) => void;
+    clearEntry: () => void;
+    setStoredOnDB: (value: boolean) => void;
   }
   
   type entry = {
@@ -35,6 +38,7 @@ export const useStore = create<StoreState>()(
 export const createNewStore = create<New>()(
     devtools((set) => ({
       step: 0,
+      storedOnDB: false,
         entry: {
             type: null,
             name: null,
@@ -51,6 +55,16 @@ export const createNewStore = create<New>()(
           cloneState.entry = {...cloneState.entry, ...property};
           return cloneState;
         }),
+        setStoredOnDB: (value:boolean) => set({ storedOnDB: value }), 
         changeStep: (step: number) => set({ step }), 
+        clearEntry: () => set({ entry: { type: null,
+          name: null,
+          calories: null,
+          carbohydrates: null,
+          fat: null,
+          fibre: null,
+          protein:null,
+          sugar: null,
+          weight: null,} }), 
     }))
 );
