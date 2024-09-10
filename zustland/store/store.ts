@@ -32,14 +32,6 @@ export const useStore = create<StoreState>()(
     }))
 );
 
-export const choosenFoodOrMeal = create<any>()(
-    devtools((set) => ({
-        food: null,
-        setFood: (food: any) => set({ food }), 
-        clearStore: () => set({ food: null }), 
-    }))
-);
-
 export const createNewStore = create<New>()(
     devtools((set) => ({
       step: 0,
