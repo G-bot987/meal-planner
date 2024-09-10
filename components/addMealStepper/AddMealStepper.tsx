@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect } from "react";
 import styles from "./addMealStepper.module.scss";
 import StepOne from "./stepOne/StepOne";
-import StepTwo from "./StepTwo";
-import StepThree from "./StepThree";
-import { choosenFoodOrMeal, mealStepperStore } from "@/zustland/store/store";
+import StepTwo from "./stepTwo/StepTwo";
+import StepThree from "./stepThree/StepThree";
+import { createNewStore } from "@/zustland/store/store";
 
 interface STEPPERINTERFACE {
   toggleMealStepper: () => void;
@@ -18,15 +18,15 @@ interface DAYINTERFACE {
 export default function AddMealStepper(props: STEPPERINTERFACE) {
   const { toggleMealStepper, day, meal } = props;
   //global state
-  const food = choosenFoodOrMeal((state) => state.food);
-  const { setStepForMealStepper } = mealStepperStore();
-  const choosenStep = mealStepperStore((state) => state.step);
+  const food = createNewStore((state) => state.entry);
+  const { changeStep } = createNewStore();
+  const choosenStep = createNewStore((state) => state.step);
 
-  const changeStep = useCallback(
+  const handleStepChange = useCallback(
     (step: number) => {
       switch (true) {
-        case food !== undefined && food !== null:
-          setStepForMealStepper(step);
+        case food.name !== null:
+          changeStep(step);
           break;
         default:
           console.log("food not set");
@@ -43,7 +43,7 @@ export default function AddMealStepper(props: STEPPERINTERFACE) {
   ];
 
   useEffect(() => {
-    setStepForMealStepper(0);
+    changeStep(0);
   }, []);
 
   return (
@@ -55,7 +55,7 @@ export default function AddMealStepper(props: STEPPERINTERFACE) {
         <li>
           <button
             className={styles.stepper__modal__stepper__list__btn}
-            onClick={() => changeStep(0)}
+            onClick={() => handleStepChange(0)}
           >
             search
           </button>
@@ -63,7 +63,7 @@ export default function AddMealStepper(props: STEPPERINTERFACE) {
         <li>
           <button
             className={styles.stepper__modal__stepper__list__btn}
-            onClick={() => changeStep(1)}
+            onClick={() => handleStepChange(1)}
           >
             check nutrition
           </button>
@@ -71,7 +71,7 @@ export default function AddMealStepper(props: STEPPERINTERFACE) {
         <li>
           <button
             className={styles.stepper__modal__stepper__list__btn}
-            onClick={() => changeStep(2)}
+            onClick={() => handleStepChange(2)}
           >
             add
           </button>

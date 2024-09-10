@@ -44,3 +44,7 @@ if you struggle to out the connection string see above or reach out to me here o
 - TypeScript
 - zustland
 - jest
+
+### things to do
+
+whip store data when navigating back and forth, keeping old data in store if only name changes for instance other food properties remain.

@@ -1,5 +1,5 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import styles from "./newFoodNutrition.module.scss";
+import React, { ChangeEvent, FormEvent, useState } from "react";
+import styles from "./StepTwo.module.scss";
 import { createNewStore } from "@/zustland/store/store";
 interface FORMDATA {
   calories: string;
@@ -11,7 +11,7 @@ interface FORMDATA {
   weight: string;
 }
 
-export default function NewFoodNutrition() {
+export default function StepTwo() {
   const [formData, setFormData] = useState<FORMDATA>({
     calories: "",
     carbohydrates: "",
@@ -23,6 +23,7 @@ export default function NewFoodNutrition() {
   });
   // this was envoked as null but caused a typing error as when a initial error msg is sent in the previous state is not iteratable if it is null error was: Type 'string[] | null' must have a '[Symbol.iterator]()' method that returns an iterator.ts(2488)
   const [error, setError] = useState<string[]>([]);
+  const { name } = createNewStore((state) => state.entry);
 
   const { add, changeStep } = createNewStore();
 
@@ -69,6 +70,7 @@ export default function NewFoodNutrition() {
         back to previous step
       </button>
       <h1 className={styles.wrapper__header}>nutrition</h1>
+      <h2>for {name}</h2>
       <p className={styles.wrapper__prompt}>
         only add values for nutrition content you want to add
       </p>
