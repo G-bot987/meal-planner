@@ -11,6 +11,7 @@ import { devtools } from "zustand/middleware";
     entry: entry
     add: (property: Partial<entry>) => void;
     changeStep: (index: number) => void;
+    clearEntry: () => void;
   }
   
   type entry = {
@@ -52,5 +53,14 @@ export const createNewStore = create<New>()(
           return cloneState;
         }),
         changeStep: (step: number) => set({ step }), 
+        clearEntry: () => set({ entry: { type: null,
+          name: null,
+          calories: null,
+          carbohydrates: null,
+          fat: null,
+          fibre: null,
+          protein:null,
+          sugar: null,
+          weight: null,} }), 
     }))
 );
