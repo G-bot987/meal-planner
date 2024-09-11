@@ -1,17 +1,19 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import styles from "./StepTwo.module.scss";
 import { createNewStore } from "@/zustland/store/store";
 interface FORMDATA {
-  calories: string;
-  carbohydrates: string;
-  fat: string;
-  fibre: string;
-  protein: string;
-  sugar: string;
-  weight: string;
+  calories: string | number;
+  carbohydrates: string | number;
+  fat: string | number;
+  fibre: string | number;
+  protein: string | number;
+  sugar: string | number;
+  weight: string | number;
 }
 
 export default function StepTwo() {
+  const { name, calories, carbohydrates, fat, fibre, protein, sugar, weight } =
+    createNewStore((state) => state.entry);
   const [formData, setFormData] = useState<FORMDATA>({
     calories: "",
     carbohydrates: "",
@@ -23,16 +25,40 @@ export default function StepTwo() {
   });
   // this was envoked as null but caused a typing error as when a initial error msg is sent in the previous state is not iteratable if it is null error was: Type 'string[] | null' must have a '[Symbol.iterator]()' method that returns an iterator.ts(2488)
   const [error, setError] = useState<string[]>([]);
-  const { name, calories, carbohydrates, fat, fibre, protein, sugar, weight } =
-    createNewStore((state) => state.entry);
   const { storedOnDB } = createNewStore((state) => state);
 
-  const { add, changeStep } = createNewStore();
+  const { add, changeStep, setStoredOnDB } = createNewStore();
+
+  useEffect(() => {
+    // must check for null as otherwise typescript error Type 'number | null' is not assignable to type 'string | number'.
+    // Type 'null' is not assignable to type 'string | number'.ts(2322)
+    //cant check if value just exists as 0 and 0.1 etc will evaluate to falsy, even thought they could be valid submissions
+    if (
+      calories !== null &&
+      carbohydrates !== null &&
+      fat !== null &&
+      fibre !== null &&
+      protein !== null &&
+      sugar !== null &&
+      weight !== null
+    ) {
+      setFormData({
+        calories,
+        carbohydrates,
+        fat,
+        fibre,
+        protein,
+        sugar,
+        weight,
+      });
+    }
+  }, []);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
+    setStoredOnDB(false);
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -43,7 +69,6 @@ export default function StepTwo() {
     e.preventDefault();
     const regex = /^\d+(\.\d+)?$/;
     for (const [key, value] of Object.entries(formData)) {
-      console.log(`${key}: ${value}`);
       const test = regex.test(value);
       if (storedOnDB) {
         changeStep(2);
