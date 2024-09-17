@@ -13,7 +13,7 @@ export async function GET(request: Request, context: { params: { typeOf: string,
 try {
     switch (typeOf) {
         case 'global':
-            const data = await globalSearchFoods(search)
+            const data = await globalSearchFoods(search, id)
             return   NextResponse.json(data)  
         case 'personal':
             const personalData = await personalSearchFoods(search, id)
