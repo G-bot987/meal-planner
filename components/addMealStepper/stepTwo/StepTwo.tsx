@@ -12,8 +12,17 @@ interface FORMDATA {
 }
 
 export default function StepTwo() {
-  const { name, calories, carbohydrates, fat, fibre, protein, sugar, weight } =
-    createNewStore((state) => state.entry);
+  const {
+    name,
+    calories,
+    carbohydrates,
+    fat,
+    fibre,
+    protein,
+    sugar,
+    weight,
+    creator,
+  } = createNewStore((state) => state.entry);
   const [formData, setFormData] = useState<FORMDATA>({
     calories: "",
     carbohydrates: "",
@@ -88,6 +97,9 @@ export default function StepTwo() {
     e.preventDefault();
     const regex = /^\d+(\.\d+)?$/;
     for (const [key, value] of Object.entries(formData)) {
+      console.log("stored on db");
+      console.log(storedOnDB);
+      console.log("---");
       const test = regex.test(value);
       if (storedOnDB) {
         changeStep(2);
@@ -98,6 +110,10 @@ export default function StepTwo() {
           ...prevItems,
           `${key} is not a positive number you can only use numbers like 1,4,5 or 0.35 do not include measurement units in your food nutrition all measurements should be in grams`,
         ]);
+      } else if (!storedOnDB && creator) {
+        console.log("this data has been changed and you are the creator");
+      } else if (!creator) {
+        console.log("you are not the creator ");
       } else {
         setError([]);
         const number = parseFloat(value);
@@ -134,6 +150,7 @@ export default function StepTwo() {
             type="text"
             className={styles.wrapper__form__field__wrapper__input}
             value={formData.calories}
+            readOnly={!creator}
             name="calories"
             onChange={handleChange}
             placeholder={`${calories}`}
@@ -149,6 +166,7 @@ export default function StepTwo() {
           <input
             type="text"
             name="carbohydrates"
+            readOnly={!creator}
             className={styles.wrapper__form__field__wrapper__input}
             value={formData.carbohydrates}
             onChange={handleChange}
@@ -166,6 +184,7 @@ export default function StepTwo() {
             type="text"
             name="fat"
             className={styles.wrapper__form__field__wrapper__input}
+            readOnly={!creator}
             value={formData.fat}
             onChange={handleChange}
             placeholder={`${fat}`}
@@ -183,6 +202,7 @@ export default function StepTwo() {
             name="fibre"
             className={styles.wrapper__form__field__wrapper__input}
             value={formData.fibre}
+            readOnly={!creator}
             onChange={handleChange}
             placeholder={`${fibre}`}
           />
@@ -198,6 +218,7 @@ export default function StepTwo() {
             type="text"
             className={styles.wrapper__form__field__wrapper__input}
             name="protein"
+            readOnly={!creator}
             value={formData.protein}
             onChange={handleChange}
             placeholder={`${protein}`}
@@ -215,6 +236,7 @@ export default function StepTwo() {
             name="sugar"
             className={styles.wrapper__form__field__wrapper__input}
             value={formData.sugar}
+            readOnly={!creator}
             onChange={handleChange}
             placeholder={`${sugar}`}
           />
@@ -231,6 +253,7 @@ export default function StepTwo() {
             name="weight"
             className={styles.wrapper__form__field__wrapper__input}
             value={formData.weight}
+            readOnly={!creator}
             onChange={handleChange}
             placeholder={`${weight}`}
           />
