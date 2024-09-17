@@ -26,6 +26,7 @@ import { devtools } from "zustand/middleware";
     protein:number|null,
     sugar: number|null,
     weight: number|null,
+    creator: boolean|null
   };
 
 export const useStore = create<StoreState>()(
@@ -49,6 +50,7 @@ export const createNewStore = create<New>()(
             protein:null,
             sugar: null,
             weight: null,
+            creator:null
         },
         add: (property: Partial<entry>) => set((state) => {
           const cloneState = {...state};
@@ -63,6 +65,7 @@ export const createNewStore = create<New>()(
           carbohydrates: null,
           fat: null,
           fibre: null,
+          creator: null,
           protein:null,
           sugar: null,
           weight: null,} }), 
