@@ -29,29 +29,48 @@ export default function StepTwo() {
 
   const { add, changeStep, setStoredOnDB } = createNewStore();
 
+  const putStoredNutritionalDataInFormState = (
+    property: string,
+    value: string | number | null
+  ) => {
+    switch (property) {
+      case "calories":
+        if (value !== null) formData.calories = value;
+        break;
+      case "carbohydrates":
+        if (value !== null) formData.carbohydrates = value;
+        break;
+      case "fat":
+        if (value !== null) formData.fat = value;
+        break;
+      case "fibre":
+        if (value !== null) formData.fibre = value;
+        break;
+      case "protein":
+        if (value !== null) formData.protein = value;
+        break;
+      case "sugar":
+        if (value !== null) formData.sugar = value;
+        break;
+      case "weight":
+        if (value !== null) formData.weight = value;
+        break;
+      default:
+        break;
+    }
+  };
+
   useEffect(() => {
     // must check for null as otherwise typescript error Type 'number | null' is not assignable to type 'string | number'.
     // Type 'null' is not assignable to type 'string | number'.ts(2322)
     //cant check if value just exists as 0 and 0.1 etc will evaluate to falsy, even thought they could be valid submissions
-    if (
-      calories !== null &&
-      carbohydrates !== null &&
-      fat !== null &&
-      fibre !== null &&
-      protein !== null &&
-      sugar !== null &&
-      weight !== null
-    ) {
-      setFormData({
-        calories,
-        carbohydrates,
-        fat,
-        fibre,
-        protein,
-        sugar,
-        weight,
-      });
-    }
+    putStoredNutritionalDataInFormState("calories", calories);
+    putStoredNutritionalDataInFormState("carbohydrates", carbohydrates);
+    putStoredNutritionalDataInFormState("fat", fat);
+    putStoredNutritionalDataInFormState("fibre", fibre);
+    putStoredNutritionalDataInFormState("protein", protein);
+    putStoredNutritionalDataInFormState("sugar", sugar);
+    putStoredNutritionalDataInFormState("weight", weight);
   }, []);
 
   const handleChange = (

@@ -17,7 +17,19 @@ export async function globalSearchMeals(search:string) {
         include: {
             foods:{
                 include:{
-                    food: true
+                    food: {
+          select: {
+            id: true, // Fields to select from the `food` model
+            name: true,
+            calories: true,
+            carbohydrates: true,
+            fat: true,
+            fibre: true,
+            protein: true,
+            sugar: true,
+            weight: true,
+          },
+        },
                 }
             },
             archived_meals: {
