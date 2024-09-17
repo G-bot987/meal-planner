@@ -8,10 +8,11 @@ export interface FOODINTERFACE {
     protein: number;
     sugar: number;
     weight: number;
-    created_at: string;
-    updated_at: string;
-    deleted_at: string | null;
-    user_id: number | null;
+    creator?: boolean
+    // created_at: string;
+    // updated_at: string;
+    // deleted_at: string | null;
+    // user_id: number | null;
   }
 
  export  interface MEALSINTERFACE {
