@@ -146,7 +146,7 @@ export default function StepTwo() {
           ) : (
             <section className={styles.wrapper__not__creator__section}>
               <p className={styles.wrapper__prompt}>
-                you are not the creator of this food, you can't change the
+                you are not the creator of this food, you cant change the
                 nutritional values here if you want to create a food with
                 different nutritional values please add a new food
               </p>
