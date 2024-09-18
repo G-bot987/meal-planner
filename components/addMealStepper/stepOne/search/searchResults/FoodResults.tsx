@@ -9,7 +9,6 @@ export default function FoodResults(props: PROPSINTERFACE) {
   const { food } = props;
   const { name } = food;
   const { add, changeStep, setStoredOnDB } = createNewStore();
-
   return (
     <li>
       {name}
