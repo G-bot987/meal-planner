@@ -1,6 +1,7 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import styles from "./StepTwo.module.scss";
 import { createNewStore } from "@/zustland/store/store";
+import New from "../stepOne/create/new/New";
 interface FORMDATA {
   calories: string | number;
   carbohydrates: string | number;
@@ -34,6 +35,7 @@ export default function StepTwo() {
   });
   // this was envoked as null but caused a typing error as when a initial error msg is sent in the previous state is not iteratable if it is null error was: Type 'string[] | null' must have a '[Symbol.iterator]()' method that returns an iterator.ts(2488)
   const [error, setError] = useState<string[]>([]);
+  const [createNewView, setCreateNewView] = useState(false);
   const { storedOnDB } = createNewStore((state) => state);
 
   const { add, changeStep, setStoredOnDB } = createNewStore();
@@ -125,149 +127,175 @@ export default function StepTwo() {
 
   return (
     <article className={styles.wrapper}>
-      <button
-        className={styles.wrapper__btn}
-        onClick={() => {
-          changeStep(0);
-        }}
-      >
-        back to previous step
-      </button>
-      <h1 className={styles.wrapper__header}>nutrition</h1>
-      <h2>for {name}</h2>
-      <p className={styles.wrapper__prompt}>
-        only add values for nutrition content you want to add
-      </p>
-      <form className={styles.wrapper__form} onSubmit={handleSubmit}>
-        <section className={styles.wrapper__form__field__wrapper}>
-          <label
-            className={styles.wrapper__form__field__wrapper__label}
-            htmlFor="calories"
+      {!createNewView ? (
+        <>
+          <button
+            className={styles.wrapper__btn}
+            onClick={() => {
+              changeStep(0);
+            }}
           >
-            calories
-          </label>
-          <input
-            type="text"
-            className={styles.wrapper__form__field__wrapper__input}
-            value={formData.calories}
-            readOnly={!creator}
-            name="calories"
-            onChange={handleChange}
-            placeholder={`${calories}`}
-          />
-        </section>
-        <section className={styles.wrapper__form__field__wrapper}>
-          <label
-            className={styles.wrapper__form__field__wrapper__label}
-            htmlFor="carbohydrates"
-          >
-            carbohydrates
-          </label>
-          <input
-            type="text"
-            name="carbohydrates"
-            readOnly={!creator}
-            className={styles.wrapper__form__field__wrapper__input}
-            value={formData.carbohydrates}
-            onChange={handleChange}
-            placeholder={`${carbohydrates}`}
-          />
-        </section>
-        <section className={styles.wrapper__form__field__wrapper}>
-          <label
-            className={styles.wrapper__form__field__wrapper__label}
-            htmlFor="fat"
-          >
-            fat
-          </label>
-          <input
-            type="text"
-            name="fat"
-            className={styles.wrapper__form__field__wrapper__input}
-            readOnly={!creator}
-            value={formData.fat}
-            onChange={handleChange}
-            placeholder={`${fat}`}
-          />
-        </section>
-        <section className={styles.wrapper__form__field__wrapper}>
-          <label
-            className={styles.wrapper__form__field__wrapper__label}
-            htmlFor="fibre"
-          >
-            fibre
-          </label>
-          <input
-            type="text"
-            name="fibre"
-            className={styles.wrapper__form__field__wrapper__input}
-            value={formData.fibre}
-            readOnly={!creator}
-            onChange={handleChange}
-            placeholder={`${fibre}`}
-          />
-        </section>
-        <section className={styles.wrapper__form__field__wrapper}>
-          <label
-            className={styles.wrapper__form__field__wrapper__label}
-            htmlFor="protein"
-          >
-            protein
-          </label>
-          <input
-            type="text"
-            className={styles.wrapper__form__field__wrapper__input}
-            name="protein"
-            readOnly={!creator}
-            value={formData.protein}
-            onChange={handleChange}
-            placeholder={`${protein}`}
-          />
-        </section>
-        <section className={styles.wrapper__form__field__wrapper}>
-          <label
-            className={styles.wrapper__form__field__wrapper__label}
-            htmlFor="sugar"
-          >
-            sugar
-          </label>
-          <input
-            type="text"
-            name="sugar"
-            className={styles.wrapper__form__field__wrapper__input}
-            value={formData.sugar}
-            readOnly={!creator}
-            onChange={handleChange}
-            placeholder={`${sugar}`}
-          />
-        </section>
-        <section className={styles.wrapper__form__field__wrapper}>
-          <label
-            className={styles.wrapper__form__field__wrapper__label}
-            htmlFor="weight"
-          >
-            weight in grams
-          </label>
-          <input
-            type="text"
-            name="weight"
-            className={styles.wrapper__form__field__wrapper__input}
-            value={formData.weight}
-            readOnly={!creator}
-            onChange={handleChange}
-            placeholder={`${weight}`}
-          />
-        </section>
-        <button className={styles.wrapper__form__btn} type="submit">
-          Submit
-        </button>
-      </form>
-      {error.length > 0 && (
-        <ul>
-          {error.map((e: string, i: number) => (
-            <li key={i}>{e}</li>
-          ))}
-        </ul>
+            back to previous step
+          </button>
+          <h1 className={styles.wrapper__header}>nutrition</h1>
+          <h2>for {name}</h2>
+          {creator ? (
+            <p className={styles.wrapper__prompt}>
+              only add values for nutrition content you want to add
+            </p>
+          ) : (
+            <section className={styles.wrapper__not__creator__section}>
+              <p className={styles.wrapper__prompt}>
+                {`you are not the creator of this food, you can't change the
+                nutritional values here if you want to create a food with
+                different nutritional values please add a new food`}
+              </p>
+              <button
+                className={
+                  styles.wrapper__not__creator__section__create__food_btn
+                }
+                onClick={() => {
+                  setCreateNewView(!createNewView);
+                }}
+              >
+                create a new food
+              </button>
+            </section>
+          )}
+          <form className={styles.wrapper__form} onSubmit={handleSubmit}>
+            <section className={styles.wrapper__form__field__wrapper}>
+              <label
+                className={styles.wrapper__form__field__wrapper__label}
+                htmlFor="calories"
+              >
+                calories
+              </label>
+              <input
+                type="text"
+                className={styles.wrapper__form__field__wrapper__input}
+                value={formData.calories}
+                readOnly={!creator}
+                name="calories"
+                onChange={handleChange}
+                placeholder={`${calories}`}
+              />
+            </section>
+            <section className={styles.wrapper__form__field__wrapper}>
+              <label
+                className={styles.wrapper__form__field__wrapper__label}
+                htmlFor="carbohydrates"
+              >
+                carbohydrates
+              </label>
+              <input
+                type="text"
+                name="carbohydrates"
+                readOnly={!creator}
+                className={styles.wrapper__form__field__wrapper__input}
+                value={formData.carbohydrates}
+                onChange={handleChange}
+                placeholder={`${carbohydrates}`}
+              />
+            </section>
+            <section className={styles.wrapper__form__field__wrapper}>
+              <label
+                className={styles.wrapper__form__field__wrapper__label}
+                htmlFor="fat"
+              >
+                fat
+              </label>
+              <input
+                type="text"
+                name="fat"
+                className={styles.wrapper__form__field__wrapper__input}
+                readOnly={!creator}
+                value={formData.fat}
+                onChange={handleChange}
+                placeholder={`${fat}`}
+              />
+            </section>
+            <section className={styles.wrapper__form__field__wrapper}>
+              <label
+                className={styles.wrapper__form__field__wrapper__label}
+                htmlFor="fibre"
+              >
+                fibre
+              </label>
+              <input
+                type="text"
+                name="fibre"
+                className={styles.wrapper__form__field__wrapper__input}
+                value={formData.fibre}
+                readOnly={!creator}
+                onChange={handleChange}
+                placeholder={`${fibre}`}
+              />
+            </section>
+            <section className={styles.wrapper__form__field__wrapper}>
+              <label
+                className={styles.wrapper__form__field__wrapper__label}
+                htmlFor="protein"
+              >
+                protein
+              </label>
+              <input
+                type="text"
+                className={styles.wrapper__form__field__wrapper__input}
+                name="protein"
+                readOnly={!creator}
+                value={formData.protein}
+                onChange={handleChange}
+                placeholder={`${protein}`}
+              />
+            </section>
+            <section className={styles.wrapper__form__field__wrapper}>
+              <label
+                className={styles.wrapper__form__field__wrapper__label}
+                htmlFor="sugar"
+              >
+                sugar
+              </label>
+              <input
+                type="text"
+                name="sugar"
+                className={styles.wrapper__form__field__wrapper__input}
+                value={formData.sugar}
+                readOnly={!creator}
+                onChange={handleChange}
+                placeholder={`${sugar}`}
+              />
+            </section>
+            <section className={styles.wrapper__form__field__wrapper}>
+              <label
+                className={styles.wrapper__form__field__wrapper__label}
+                htmlFor="weight"
+              >
+                weight in grams
+              </label>
+              <input
+                type="text"
+                name="weight"
+                className={styles.wrapper__form__field__wrapper__input}
+                value={formData.weight}
+                readOnly={!creator}
+                onChange={handleChange}
+                placeholder={`${weight}`}
+              />
+            </section>
+            <button className={styles.wrapper__form__btn} type="submit">
+              Submit
+            </button>
+          </form>
+          {error.length > 0 && (
+            <ul>
+              {error.map((e: string, i: number) => (
+                <li key={i}>{e}</li>
+              ))}
+            </ul>
+          )}
+        </>
+      ) : (
+        <New />
       )}
     </article>
   );

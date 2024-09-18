@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./create.module.scss";
 import New from "./new/New";
 
@@ -9,7 +9,7 @@ export default function CreateNew() {
       {!versionUpdate && (
         <article className={styles.create__wrapper__question__wrapper}>
           <h1 className={styles.create__wrapper__question__wrapper__header}>
-            are you updating a version of a meal or food{" "}
+            are you updating a version of a meal or food
           </h1>
 
           <section
