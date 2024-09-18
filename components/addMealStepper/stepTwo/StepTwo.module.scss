@@ -3,6 +3,7 @@
     flex-direction: column;
     align-items: center;
     text-transform: uppercase;
+    padding: 0.5rem;
 &__btn{
     text-transform: uppercase;
     padding: 0.5rem;
@@ -14,6 +15,17 @@
 &__prompt{
     font-weight: 600;
     text-align: center;
+}
+
+&__not__creator__section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0.5rem;
+    &__create__food__btn{
+        padding: 0.5rem;
+    }
 }
 &__form{
     display: flex;
