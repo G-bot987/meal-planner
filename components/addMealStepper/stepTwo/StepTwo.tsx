@@ -95,14 +95,29 @@ export default function StepTwo() {
     }));
   };
 
+  const checkIfUserHasChangedValue = (property: string, value: number) => {
+    const currentValues = {
+      calories,
+      carbohydrates,
+      fat,
+      fibre,
+      protein,
+      sugar,
+      weight,
+    };
+
+    if (value !== currentValues[property as keyof typeof currentValues]) {
+      add({ [property]: value });
+      return;
+    }
+  };
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const regex = /^\d+(\.\d+)?$/;
     for (const [key, value] of Object.entries(formData)) {
-      console.log("stored on db");
-      console.log(storedOnDB);
-      console.log("---");
       const test = regex.test(value);
+      const valueAsInt = parseInt(value);
       if (storedOnDB) {
         changeStep(2);
       }
@@ -114,6 +129,7 @@ export default function StepTwo() {
         ]);
       } else if (!storedOnDB && creator) {
         console.log("this data has been changed and you are the creator");
+        checkIfUserHasChangedValue(key, valueAsInt);
       } else if (!creator) {
         console.log("you are not the creator ");
       } else {
