@@ -131,9 +131,7 @@ export default function StepTwo() {
         typeof value === "string" || typeof value === "number"
           ? regex.test(value.toString())
           : value;
-      console.log(key, test, value);
-      console.log(typeof test);
-      console.log(formData);
+
       if (!test) {
         newErrors.push(
           `${key} is not a positive number. You can only use numbers like 1, 4, 5, or 0.35. Do not include measurement units in your food nutrition; all measurements should be in grams.`
