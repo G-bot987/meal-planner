@@ -11,6 +11,7 @@ export interface FORMDATA {
   protein: string | number;
   sugar: string | number;
   weight: string | number;
+  [key: string]: string | number; // Index signature to allow dynamic keys
 }
 
 export default function StepTwo() {
@@ -39,7 +40,7 @@ export default function StepTwo() {
     weight: "",
   });
   // this was envoked as null but caused a typing error as when a initial error msg is sent in the previous state is not iteratable if it is null error was: Type 'string[] | null' must have a '[Symbol.iterator]()' method that returns an iterator.ts(2488)
-  const [error, setError] = useState<string[]>([]);
+  const [errors, setErrors] = useState<string[]>([]);
   const [createNewView, setCreateNewView] = useState(false);
   const [confirmationScreen, setConfirmationScreen] = useState(false);
   const [changedValues, setChangedValues] = useState<Partial<FORMDATA>>({});
@@ -113,38 +114,44 @@ export default function StepTwo() {
     if (value !== currentValues[property as keyof typeof currentValues]) {
       add({ [property]: value });
       setChangedValues((prev) => ({ ...prev, [property]: value }));
-      setConfirmationScreen(true);
       return;
     }
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const regex = /^\d+(\.\d+)?$/;
+    const regex = /^0$|^\d+(\.\d+)?$/;
+    const newErrors: string[] = [];
+
     for (const [key, value] of Object.entries(formData)) {
-      const test = regex.test(value);
-      const valueAsInt = parseFloat(value);
-      if (storedOnDB) {
-        changeStep(2);
-      }
+      // const test = regex.test(value);
+      // const valueAsInt = parseFloat(value);
+      const valueAsInt = typeof value === "string" ? parseFloat(value) : value;
+      const test =
+        typeof value === "string" || typeof value === "number"
+          ? regex.test(value.toString())
+          : value;
+      console.log(key, test, value);
+      console.log(typeof test);
+      console.log(formData);
       if (!test) {
-        // passing in previous state and spreading otherwise previous error msgs are removed on update
-        setError((prevItems) => [
-          ...prevItems,
-          `${key} is not a positive number you can only use numbers like 1,4,5 or 0.35 do not include measurement units in your food nutrition all measurements should be in grams`,
-        ]);
-      } else if (!storedOnDB && creator) {
-        console.log("this data has been changed and you are the creator");
-        //abstracted function check that the new value is different from store data, if so then update store
-        checkIfUserHasChangedValue(key, valueAsInt);
-      } else if (!creator) {
-        console.log("you are not the creator ");
+        newErrors.push(
+          `${key} is not a positive number. You can only use numbers like 1, 4, 5, or 0.35. Do not include measurement units in your food nutrition; all measurements should be in grams.`
+        );
       } else {
-        setError([]);
-        const number = parseFloat(value);
-        add({ [key]: number });
-        changeStep(2);
+        checkIfUserHasChangedValue(key, valueAsInt);
       }
+    }
+
+    if (newErrors.length > 0) {
+      setErrors(newErrors);
+    } else if (storedOnDB) {
+      console.log("storedon db no change");
+      changeStep(2);
+    } else {
+      setErrors([]);
+      console.log("success");
+      setConfirmationScreen(true);
     }
   };
 
@@ -311,9 +318,9 @@ export default function StepTwo() {
                   Submit
                 </button>
               </form>
-              {error.length > 0 && (
+              {errors.length > 0 && (
                 <ul>
-                  {error.map((e: string, i: number) => (
+                  {errors.map((e: string, i: number) => (
                     <li key={i}>{e}</li>
                   ))}
                 </ul>
