@@ -124,8 +124,6 @@ export default function StepTwo() {
     const newErrors: string[] = [];
 
     for (const [key, value] of Object.entries(formData)) {
-      // const test = regex.test(value);
-      // const valueAsInt = parseFloat(value);
       const valueAsInt = typeof value === "string" ? parseFloat(value) : value;
       const test =
         typeof value === "string" || typeof value === "number"
@@ -144,11 +142,9 @@ export default function StepTwo() {
     if (newErrors.length > 0) {
       setErrors(newErrors);
     } else if (storedOnDB) {
-      console.log("storedon db no change");
       changeStep(2);
     } else {
       setErrors([]);
-      console.log("success");
       setConfirmationScreen(true);
     }
   };
@@ -329,7 +325,11 @@ export default function StepTwo() {
           )}
         </>
       )}
-      {confirmationScreen && <Confirmation {...changedValues} />}
+      {confirmationScreen && (
+        <Confirmation
+          {...{ changedValues, confirmationScreen, setConfirmationScreen }}
+        />
+      )}
     </article>
   );
 }

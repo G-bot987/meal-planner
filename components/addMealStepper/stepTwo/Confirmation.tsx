@@ -2,11 +2,18 @@ import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { FORMDATA } from "./StepTwo";
 import styles from "./StepTwo.module.scss";
 
-export default function Confirmation(props: Partial<FORMDATA>) {
-  console.log(Object.entries(props));
+interface PROPSINTERFACE {
+  changedValues: Partial<FORMDATA>;
+  confirmationScreen: boolean;
+  setConfirmationScreen: Function;
+}
+
+export default function Confirmation(props: PROPSINTERFACE) {
+  const { changedValues, confirmationScreen, setConfirmationScreen } = props;
+  console.log(Object.entries(changedValues));
 
   const [formData, setFormData] = useState<Partial<FORMDATA>>({});
-  const arrayOfChangedNutrition = Object.entries(props);
+  const arrayOfChangedNutrition = Object.entries(changedValues);
 
   useEffect(() => {
     arrayOfChangedNutrition.forEach((changedValue) =>
@@ -15,9 +22,7 @@ export default function Confirmation(props: Partial<FORMDATA>) {
         [changedValue[0]]: changedValue[1],
       }))
     );
-  }, [props]);
-
-  useEffect(() => {}, [formData]);
+  }, [changedValues]);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -50,7 +55,7 @@ export default function Confirmation(props: Partial<FORMDATA>) {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const regex = /^\d+(\.\d+)?$/;
+    const regex = /^0$|^\d+(\.\d+)?$/;
 
     // for (const [key, value] of Object.entries(formData)) {
     //   const test = regex.test(value);
@@ -80,6 +85,13 @@ export default function Confirmation(props: Partial<FORMDATA>) {
   };
   return (
     <form onSubmit={handleSubmit}>
+      <button
+        onClick={() => {
+          setConfirmationScreen(!confirmationScreen);
+        }}
+      >
+        back
+      </button>
       You have changed the following values please submit to confirm
       {Array.isArray(arrayOfChangedNutrition) &&
         arrayOfChangedNutrition.length > 0 &&
@@ -87,13 +99,13 @@ export default function Confirmation(props: Partial<FORMDATA>) {
           <section key={key}>
             <label
               className={styles.wrapper__form__field__wrapper__label}
-              htmlFor="weight"
+              htmlFor={`${key}`}
             >
               {key}
             </label>
             <input
               type="text"
-              name="weight"
+              name={`${key}`}
               className={styles.wrapper__form__field__wrapper__input}
               value={formData[key] ?? ""}
               onChange={handleChange}
