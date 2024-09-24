@@ -8,12 +8,14 @@ import { devtools } from "zustand/middleware";
 
     type New = {
       step: number,
+    completedStep?: number,
     entry: entry,
     storedOnDB: boolean,
     add: (property: Partial<entry>) => void;
     changeStep: (index: number) => void;
     clearEntry: () => void;
     setStoredOnDB: (value: boolean) => void;
+    setCompletedStep: (value: number) => void;
   }
   
   type entry = {
@@ -58,6 +60,7 @@ export const createNewStore = create<New>()(
           return cloneState;
         }),
         setStoredOnDB: (value:boolean) => set({ storedOnDB: value }), 
+        setCompletedStep: (value:number) => set({ completedStep: value }), 
         changeStep: (step: number) => set({ step }), 
         clearEntry: () => set({ entry: { type: null,
           name: null,
