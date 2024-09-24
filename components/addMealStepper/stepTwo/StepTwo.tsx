@@ -28,7 +28,7 @@ export default function StepTwo() {
   } = createNewStore((state) => state.entry);
   const { storedOnDB } = createNewStore((state) => state);
 
-  const { add, changeStep, setStoredOnDB } = createNewStore();
+  const { add, changeStep, setStoredOnDB, setCompletedStep } = createNewStore();
 
   const [formData, setFormData] = useState<FORMDATA>({
     calories: "",
@@ -142,6 +142,7 @@ export default function StepTwo() {
     if (newErrors.length > 0) {
       setErrors(newErrors);
     } else if (storedOnDB) {
+      setCompletedStep(1);
       changeStep(2);
     } else {
       setErrors([]);
