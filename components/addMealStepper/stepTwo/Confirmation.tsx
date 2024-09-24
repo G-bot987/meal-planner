@@ -27,12 +27,11 @@ export default function Confirmation(props: PROPSINTERFACE) {
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    // const { name, value } = e.target;
-    // setStoredOnDB(false);
-    // setFormData((prevData) => ({
-    //   ...prevData,
-    //   [name]: value,
-    // }));
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   const checkIfUserHasChangedValue = (property: string, value: number) => {
@@ -56,6 +55,9 @@ export default function Confirmation(props: PROPSINTERFACE) {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const regex = /^0$|^\d+(\.\d+)?$/;
+    console.log("submitted");
+    console.log(formData);
+    console.log("---");
 
     // for (const [key, value] of Object.entries(formData)) {
     //   const test = regex.test(value);
