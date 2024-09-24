@@ -43,6 +43,8 @@ export default function StepTwo() {
   const [errors, setErrors] = useState<string[]>([]);
   const [createNewView, setCreateNewView] = useState(false);
   const [confirmationScreen, setConfirmationScreen] = useState(false);
+  const [restoreOriginalData, setRestoreOriginalData] = useState(false);
+
   const [changedValues, setChangedValues] = useState<Partial<FORMDATA>>({});
 
   const putStoredNutritionalDataInFormState = (
@@ -88,6 +90,8 @@ export default function StepTwo() {
     putStoredNutritionalDataInFormState("sugar", sugar);
     putStoredNutritionalDataInFormState("weight", weight);
   }, []);
+
+  useEffect(() => {}, [restoreOriginalData]);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -166,6 +170,15 @@ export default function StepTwo() {
               </button>
               <h1 className={styles.wrapper__header}>nutrition</h1>
               <h2>for {name}</h2>
+
+              <button
+                className={styles.wrapper__btn}
+                onClick={() => {
+                  setRestoreOriginalData(!restoreOriginalData);
+                }}
+              >
+                restore original nutritional content
+              </button>
               {creator ? (
                 <p className={styles.wrapper__prompt}>
                   only add values for nutrition content you want to add
