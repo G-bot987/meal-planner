@@ -147,7 +147,7 @@ export default function StepThree() {
       setErrors(newErrors);
     } else if (storedOnDB) {
       setCompletedStep(1);
-      changeStep(2);
+      changeStep(3);
     } else {
       setErrors([]);
       setConfirmationScreen(true);
