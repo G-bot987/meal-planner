@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { FORMDATA } from "./StepTwo";
-import styles from "./StepTwo.module.scss";
+import { FORMDATA } from "./StepThree";
+import styles from "./StepThree.module.scss";
 import { createNewStore } from "@/zustland/store/store";
 
 interface PROPSINTERFACE {

@@ -12,7 +12,10 @@ export default function NewFood() {
     clearEntry();
     add({ name: `${searchQuery}` });
     add({ type: `food` });
-    changeStep(1);
+    add({ creator: true });
+    console.log("quack");
+    changeStep(2);
+    console.log("post step change");
   };
 
   useEffect(() => {
@@ -46,6 +49,7 @@ export default function NewFood() {
         >
           next
         </button>
+        {submit}
       </section>
     </section>
   );
