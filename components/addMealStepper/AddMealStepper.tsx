@@ -65,7 +65,7 @@ export default function AddMealStepper(props: STEPPERINTERFACE) {
         <li>
           <button
             className={styles.stepper__modal__stepper__list__btn}
-            onClick={() => handleStepChange(1)}
+            onClick={() => handleStepChange(2)}
           >
             check nutrition
           </button>
@@ -73,7 +73,7 @@ export default function AddMealStepper(props: STEPPERINTERFACE) {
         <li>
           <button
             className={styles.stepper__modal__stepper__list__btn}
-            onClick={() => handleStepChange(2)}
+            onClick={() => handleStepChange(3)}
           >
             add
           </button>

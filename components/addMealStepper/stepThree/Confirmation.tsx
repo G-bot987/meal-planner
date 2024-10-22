@@ -63,7 +63,7 @@ export default function Confirmation(props: PROPSINTERFACE) {
     } else {
       setErrors([]);
       setCompletedStep(1);
-      changeStep(2);
+      changeStep(3);
     }
   };
   return (
