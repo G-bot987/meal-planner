@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styles from "./new.module.scss";
-import NewFood from "./food/NewFood";
 import { createNewStore } from "@/zustland/store/store";
 export default function New() {
   const [creatingNew, setCreatingNew] = useState<string | null>(null);
@@ -11,6 +10,7 @@ export default function New() {
   // useEffect(() => {
   //   changeStep(0);
   // }, []);
+  const { changeStep } = createNewStore();
 
   return (
     <article className={styles.create__wrapper}>
@@ -28,9 +28,7 @@ export default function New() {
               className={
                 styles.create__wrapper__question__wrapper__new__btn__wrapper__btn
               }
-              onClick={() => {
-                setCreatingNew("meal");
-              }}
+              onClick={() => {}}
             >
               meal
             </button>
@@ -39,7 +37,7 @@ export default function New() {
                 styles.create__wrapper__question__wrapper__new__btn__wrapper__btn
               }
               onClick={() => {
-                setCreatingNew("food");
+                changeStep(1);
               }}
             >
               food
@@ -47,7 +45,6 @@ export default function New() {
           </section>
         </article>
       )}
-      {creatingNew === "food" && <NewFood />}
     </article>
   );
 }

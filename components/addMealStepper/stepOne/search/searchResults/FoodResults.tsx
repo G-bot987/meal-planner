@@ -14,7 +14,7 @@ export default function FoodResults(props: PROPSINTERFACE) {
       {name}
       <button
         onClick={() => {
-          changeStep(1);
+          changeStep(2);
           add(food);
           setStoredOnDB(true);
         }}

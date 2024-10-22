@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect } from "react";
 import styles from "./addMealStepper.module.scss";
 import StepOne from "./stepOne/StepOne";
-import StepTwo from "./stepTwo/StepTwo";
 import StepThree from "./stepThree/StepThree";
+import StepFour from "./stepFour/StepFour";
 import { createNewStore } from "@/zustland/store/store";
+import NewFood from "./stepTwo/NewFood";
 
 interface STEPPERINTERFACE {
   toggleMealStepper: () => void;
@@ -38,8 +39,9 @@ export default function AddMealStepper(props: STEPPERINTERFACE) {
 
   const steps = [
     <StepOne key={1} />,
-    <StepTwo key={2} />,
+    <NewFood key={2} />,
     <StepThree key={3} />,
+    <StepFour key={4} />,
   ];
 
   useEffect(() => {
