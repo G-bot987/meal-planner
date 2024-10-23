@@ -6,6 +6,13 @@ import { devtools } from "zustand/middleware";
     setIndex: (index: number) => void;
     }
 
+    interface SearchState {
+      searchType: String|null,
+      param: String|null,
+      setSearchType: (searchType: string|null) => void;
+      setParam: (param: string) => void;
+      }
+
     type New = {
       step: number,
     completedStep?: number,
@@ -17,6 +24,13 @@ import { devtools } from "zustand/middleware";
     setStoredOnDB: (value: boolean) => void;
     setCompletedStep: (value: number) => void;
   }
+
+  type backUp = {
+
+  entry: entry,
+  addToBackUp: (property: Partial<entry>) => void;
+  clearEntry: () => void;
+}
   
   type entry = {
     type: string|null
@@ -36,6 +50,15 @@ export const useStore = create<StoreState>()(
         mealIndex: 0,
         setIndex: (index: number) => set({ mealIndex: index }), 
     }))
+);
+
+export const searchStore = create<SearchState>()(
+  devtools((set) => ({
+    searchType:null ,
+    param: null,
+    setSearchType: (value:string|null) => set({ searchType: value }), 
+    setParam: (value:string) => set({ param: value }), 
+  }))
 );
 
 export const createNewStore = create<New>()(
@@ -73,4 +96,37 @@ export const createNewStore = create<New>()(
           sugar: null,
           weight: null,} }), 
     }))
+);
+
+
+export const backUpNutritionalStore = create<backUp>()(
+  devtools((set) => ({
+      entry: {
+          type: null,
+          name: null,
+          calories: null,
+          carbohydrates: null,
+          fat: null,
+          fibre: null,
+          protein:null,
+          sugar: null,
+          weight: null,
+          creator:null
+      },
+      addToBackUp: (property: Partial<entry>) => set((state) => {
+        const cloneState = {...state};
+        cloneState.entry = {...cloneState.entry, ...property};
+        return cloneState;
+      }),
+      clearEntry: () => set({ entry: { type: null,
+        name: null,
+        calories: null,
+        carbohydrates: null,
+        fat: null,
+        fibre: null,
+        creator: null,
+        protein:null,
+        sugar: null,
+        weight: null,} }), 
+  }))
 );
