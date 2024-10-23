@@ -6,12 +6,16 @@ import {
   FOODINTERFACE,
   MEALSINTERFACE,
 } from "@/utils/interfaces/mealsAndFoodsInterfaces/interfaces";
+import { createNewStore, searchStore } from "@/zustland/store/store";
 
 export default function Search(props: {
-  param: string;
-  searchType: string | boolean;
+  // param: string;
+  // searchType: string | boolean;
 }) {
-  const { param, searchType } = props;
+  const { searchType, param } = searchStore((state) => state);
+
+  const { changeStep } = createNewStore();
+
   const [searchValue, setSearchValue] = useState("");
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState(null);
@@ -27,7 +31,6 @@ export default function Search(props: {
       setSearchResults(null);
       return;
     }
-
     try {
       const search = await fetch(`/api/${param}/${searchQuery}/${searchType}`, {
         method: "GET",
@@ -54,7 +57,17 @@ export default function Search(props: {
 
   return (
     <section className={styles.form}>
-      <label htmlFor="search">Search {param}</label>
+      <button
+        onClick={() => {
+          changeStep(0);
+        }}
+      >
+        back to Meal or Food search
+      </button>
+
+      <label htmlFor="search">
+        {searchType} Search {param}
+      </label>
       <input
         type="text"
         value={searchValue}

@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import styles from "./stepOne.module.scss";
 import Search from "./search/Search";
-import CreateNew from "./create/CreateNew";
+import CreateNew from "../../createSteps/create/CreateNew";
+import { createNewStore, searchStore } from "@/zustland/store/store";
 
 export default function StepOne() {
   // const searchFor = ["foods", "meals"];
   const [searchMeals, setSearchMeals] = useState(false);
   const [searchFoods, setSearchFoods] = useState(false);
-  const [searchType, setSearchType] = useState<string | boolean>(false);
+  // const [searchType, setSearchType] = useState<string | boolean>(false);
   const [createNew, setCreateNew] = useState(false);
+  const { changeStep, setCompletedStep } = createNewStore();
+  const { setSearchType, setParam } = searchStore();
+  const { searchType } = searchStore((state) => state);
 
   return (
     <article className={styles.step__one__wrapper}>
@@ -39,7 +43,8 @@ export default function StepOne() {
           <button
             className={styles.step__one__wrapper__search__btn__wrapper__btn}
             onClick={() => {
-              setCreateNew(!createNew);
+              changeStep(2);
+              setCompletedStep(0);
             }}
           >
             create New Food or Meal
@@ -51,7 +56,7 @@ export default function StepOne() {
           <button
             className={styles.search__wrapper__btn}
             onClick={() => {
-              setSearchType(false);
+              setSearchType(null);
             }}
           >
             back to type of search
@@ -59,41 +64,21 @@ export default function StepOne() {
           <section className={styles.search__wrapper__button__wrapper}>
             <button
               onClick={() => {
-                setSearchMeals(!searchMeals), setSearchFoods(false);
+                setParam("meals");
+                changeStep(1);
               }}
             >
               Search Meals
             </button>
             <button
               onClick={() => {
-                setSearchFoods(!searchFoods), setSearchMeals(false);
+                setParam("foods");
+                changeStep(1);
               }}
             >
               Search Foods
             </button>
           </section>
-        </article>
-      )}
-
-      {typeof searchType === "string" && (
-        <section>
-          {searchMeals && <Search param="meals" searchType={searchType} />}
-          {searchFoods && <Search param="foods" searchType={searchType} />}
-        </section>
-      )}
-
-      {createNew && (
-        <article className={styles.step__one__wrapper__add__new__wrapper}>
-          <button
-            className={styles.step__one__wrapper__add__new__wrapper__btn}
-            onClick={() => {
-              setCreateNew(!createNew);
-            }}
-          >
-            back to search or create menu
-          </button>
-
-          <CreateNew />
         </article>
       )}
     </article>

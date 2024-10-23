@@ -1,10 +1,14 @@
 import React, { useCallback, useEffect } from "react";
 import styles from "./addMealStepper.module.scss";
-import StepOne from "./stepOne/StepOne";
-import StepThree from "./stepThree/StepThree";
-import StepFour from "./stepFour/StepFour";
+
+import StepOne from "./steps/searchSteps/stepOne/StepOne";
+import NewFood from "./steps/createSteps/create/new/createNewFoodSteps/stepTwo/NewFood";
+import StepFive from "./steps/NutritionalSteps/stepFive/StepFive";
+import StepEight from "./steps/SubmissionSteps/stepEight/StepEight";
+
 import { createNewStore } from "@/zustland/store/store";
-import NewFood from "./stepTwo/NewFood";
+import CreateNew from "./steps/createSteps/create/CreateNew";
+import Search from "./steps/searchSteps/stepOne/search/Search";
 
 interface STEPPERINTERFACE {
   toggleMealStepper: () => void;
@@ -25,6 +29,7 @@ export default function AddMealStepper(props: STEPPERINTERFACE) {
 
   const handleStepChange = useCallback(
     (step: number) => {
+      //this needs innovating to work off completed steps
       switch (true) {
         case food.name !== null:
           changeStep(step);
@@ -39,9 +44,11 @@ export default function AddMealStepper(props: STEPPERINTERFACE) {
 
   const steps = [
     <StepOne key={1} />,
-    <NewFood key={2} />,
-    <StepThree key={3} />,
-    <StepFour key={4} />,
+    <Search key={2} />,
+    <CreateNew key={3} />,
+    <NewFood key={4} />,
+    <StepFive key={5} />,
+    <StepEight key={6} />,
   ];
 
   useEffect(() => {
@@ -65,7 +72,7 @@ export default function AddMealStepper(props: STEPPERINTERFACE) {
         <li>
           <button
             className={styles.stepper__modal__stepper__list__btn}
-            onClick={() => handleStepChange(2)}
+            onClick={() => handleStepChange(4)}
           >
             check nutrition
           </button>
@@ -73,7 +80,7 @@ export default function AddMealStepper(props: STEPPERINTERFACE) {
         <li>
           <button
             className={styles.stepper__modal__stepper__list__btn}
-            onClick={() => handleStepChange(3)}
+            onClick={() => handleStepChange(5)}
           >
             add
           </button>

@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { FORMDATA } from "./StepThree";
-import styles from "./StepThree.module.scss";
+import { FORMDATA } from "./StepFive";
+import styles from "./StepFive.module.scss";
 import { createNewStore } from "@/zustland/store/store";
 
 interface PROPSINTERFACE {
@@ -63,7 +63,7 @@ export default function Confirmation(props: PROPSINTERFACE) {
     } else {
       setErrors([]);
       setCompletedStep(1);
-      changeStep(3);
+      changeStep(5);
     }
   };
   return (

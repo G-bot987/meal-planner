@@ -13,9 +13,7 @@ export default function NewFood() {
     add({ name: `${searchQuery}` });
     add({ type: `food` });
     add({ creator: true });
-    console.log("quack");
-    changeStep(2);
-    console.log("post step change");
+    changeStep(4);
   };
 
   useEffect(() => {

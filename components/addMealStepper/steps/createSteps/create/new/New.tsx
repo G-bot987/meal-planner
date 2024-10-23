@@ -37,7 +37,7 @@ export default function New() {
                 styles.create__wrapper__question__wrapper__new__btn__wrapper__btn
               }
               onClick={() => {
-                changeStep(1);
+                changeStep(3);
               }}
             >
               food
