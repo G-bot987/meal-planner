@@ -55,37 +55,6 @@ export default function StepFive() {
 
   const [changedValues, setChangedValues] = useState<Partial<FORMDATA>>({});
 
-  // const putStoredNutritionalDataInFormState = (
-  //   property: string,
-  //   value: string | number | null
-  // ) => {
-  //   switch (property) {
-  //     case "calories":
-  //       if (value !== null) formData.calories = value;
-  //       break;
-  //     case "carbohydrates":
-  //       if (value !== null) formData.carbohydrates = value;
-  //       break;
-  //     case "fat":
-  //       if (value !== null) formData.fat = value;
-  //       break;
-  //     case "fibre":
-  //       if (value !== null) formData.fibre = value;
-  //       break;
-  //     case "protein":
-  //       if (value !== null) formData.protein = value;
-  //       break;
-  //     case "sugar":
-  //       if (value !== null) formData.sugar = value;
-  //       break;
-  //     case "weight":
-  //       if (value !== null) formData.weight = value;
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // };
-
   const putStoredNutritionalDataInFormState = (
     property: string,
     value: string | number | null
@@ -110,8 +79,6 @@ export default function StepFive() {
     putStoredNutritionalDataInFormState("sugar", sugar);
     putStoredNutritionalDataInFormState("weight", weight);
   }, []);
-
-
 
   const handleRestore = () => {
     putStoredNutritionalDataInFormState("calories", entry.calories);
