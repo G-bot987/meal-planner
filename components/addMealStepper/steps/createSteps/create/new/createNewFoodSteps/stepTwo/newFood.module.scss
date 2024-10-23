@@ -1,0 +1,17 @@
+.form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 10rem;
+    &__label{
+        text-transform: uppercase;
+    }
+    &__input{
+        text-transform: uppercase;
+    }
+    &__btn{
+        padding: 0.5rem;
+        text-transform: uppercase;
+    }
+}
