@@ -16,7 +16,7 @@ export default function FoodResults(props: PROPSINTERFACE) {
       {name}
       <button
         onClick={() => {
-          changeStep(4);
+          changeStep(5);
           add(food);
           setStoredOnDB(true);
           addToBackUp(food);
