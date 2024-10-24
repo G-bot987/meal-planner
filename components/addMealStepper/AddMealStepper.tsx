@@ -9,6 +9,7 @@ import StepEight from "./steps/SubmissionSteps/stepEight/StepEight";
 import { createNewStore } from "@/zustland/store/store";
 import CreateNew from "./steps/createSteps/create/CreateNew";
 import Search from "./steps/searchSteps/stepOne/search/Search";
+import New from "./steps/createSteps/create/new/New";
 
 interface STEPPERINTERFACE {
   toggleMealStepper: () => void;
@@ -46,9 +47,10 @@ export default function AddMealStepper(props: STEPPERINTERFACE) {
     <StepOne key={1} />,
     <Search key={2} />,
     <CreateNew key={3} />,
-    <NewFood key={4} />,
-    <StepFive key={5} />,
-    <StepEight key={6} />,
+    <New key={4} />,
+    <NewFood key={5} />,
+    <StepFive key={6} />,
+    <StepEight key={7} />,
   ];
 
   useEffect(() => {
@@ -72,7 +74,7 @@ export default function AddMealStepper(props: STEPPERINTERFACE) {
         <li>
           <button
             className={styles.stepper__modal__stepper__list__btn}
-            onClick={() => handleStepChange(4)}
+            onClick={() => handleStepChange(5)}
           >
             check nutrition
           </button>
@@ -80,7 +82,7 @@ export default function AddMealStepper(props: STEPPERINTERFACE) {
         <li>
           <button
             className={styles.stepper__modal__stepper__list__btn}
-            onClick={() => handleStepChange(5)}
+            onClick={() => handleStepChange(6)}
           >
             add
           </button>
