@@ -45,6 +45,14 @@ import { devtools } from "zustand/middleware";
     creator: boolean|null
   };
 
+  interface endpointState {
+    item: String|null,
+    operation: String|null,
+    setItem: (searchType: string) => void;
+    setOperation: (param: string) => void;
+    clearStore: () => void;
+    }
+
 export const useStore = create<StoreState>()(
     devtools((set) => ({
         mealIndex: 0,
@@ -128,5 +136,18 @@ export const backUpNutritionalStore = create<backUp>()(
         protein:null,
         sugar: null,
         weight: null,} }), 
+  }))
+);
+
+
+export const endPointStore = create<endpointState>()(
+  devtools((set) => ({
+    item: null,
+    operation: null,
+    setItem: (value:string) => set({ item: value }), 
+    setOperation: (value:string) => set({ operation: value }), 
+    clearStore: () => set({   
+        item: null,
+        operation: null, }), 
   }))
 );
