@@ -47,6 +47,9 @@ export default function Confirmation(props: PROPSINTERFACE) {
       const search = await fetch(`/api/${operation}/${item}`, {
         //when creating versions this method may need to change rememeber this
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(itemData),
       });
       console.log("post request");
