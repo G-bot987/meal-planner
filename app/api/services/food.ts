@@ -79,6 +79,9 @@ export async function personalSearchFoods(search:string, id:string|undefined) {
 
 export async function addFood(food:any, id:string|undefined) {
 
+  // will use a loop just destructing for now while iterating over logic
+  const {name, calories, carbohydrates, fat, fibre, protein, sugar, weight} = food
+
   switch (typeof id) {
     case  'string':
       const idAsInt = parseInt(id, 10)
@@ -89,14 +92,14 @@ export async function addFood(food:any, id:string|undefined) {
       const data =  await prisma.food.create({
         data: {
           user_id: idAsInt,
-          name: food.name,
-          calories: food.calories,
-          carbohydrates: food.carbohydrates,
-          fat: food.fat,
-          fibre: food.fibre,
-          protein: food.protein,
-          sugar: food.sugar,
-          weight: food.weight
+          name: name,
+          calories: calories,
+          carbohydrates: carbohydrates,
+          fat: fat,
+          fibre: fibre,
+          protein: protein,
+          sugar: sugar,
+          weight: weight
         },
       })
       
