@@ -10,10 +10,6 @@ export async function POST(request: NextRequest) {
     const session = await getServerSession(authOptions);
     const id = session?.user.id
 
-    // const {params:{typeOf, search}} = context;
-
-    // const session = await getServerSession(authOptions);
-    // const id = session?.user.id
     addFood(foodToCreate, id)
 
 
