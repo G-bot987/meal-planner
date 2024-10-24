@@ -75,3 +75,39 @@ export async function personalSearchFoods(search:string, id:string|undefined) {
         return 'An unexpected error occurred';
     }
 }
+
+
+export async function addFood(food:any, id:string|undefined) {
+
+  // will use a loop just destructing for now while iterating over logic
+  const {name, calories, carbohydrates, fat, fibre, protein, sugar, weight} = food
+
+  switch (typeof id) {
+    case  'string':
+      const idAsInt = parseInt(id, 10)
+      // Ensure `id` is a valid number before querying the database
+      if (isNaN(idAsInt)) {
+            return 'Invalid user ID';
+          }
+      const data =  await prisma.food.create({
+        data: {
+          user_id: idAsInt,
+          name: name,
+          calories: calories,
+          carbohydrates: carbohydrates,
+          fat: fat,
+          fibre: fibre,
+          protein: protein,
+          sugar: sugar,
+          weight: weight
+        },
+      })
+      
+     const response = data
+      return response    
+    case 'undefined':
+        return  'an error getting your session'
+    default:
+        return 'An unexpected error occurred';
+    }
+}

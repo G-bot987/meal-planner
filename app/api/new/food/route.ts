@@ -1,18 +1,20 @@
-import { NextResponse } from 'next/server'
-import { globalSearchFoods, personalSearchFoods } from '../../services/food';
+import { NextRequest, NextResponse } from 'next/server'
+import { addFood } from '../../services/food';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/utils/authOptions';
 
-export async function POST(request: Request, context: { params: { typeOf: string, search: string } }) {
+export async function POST(request: NextRequest) {
+
+    const foodToCreate = await request.json()
+
+    const session = await getServerSession(authOptions);
+    const id = session?.user.id
+
+    addFood(foodToCreate, id)
 
 
-console.log('create food')
+    return   NextResponse.json({ message: 'Data received successfully', foodToCreate:foodToCreate })
 
-    // const {params:{typeOf, search}} = context;
-
-    // const session = await getServerSession(authOptions);
-    // const id = session?.user.id
-    return   NextResponse.json('success') 
 // try {
 //     switch (typeOf) {
 //         case 'global':

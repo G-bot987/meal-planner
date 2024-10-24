@@ -42,14 +42,7 @@ export default function Confirmation(props: PROPSINTERFACE) {
   const { entry } = createNewStore((state) => state);
 
   const handleSubmission = async () => {
-    console.log("entry");
-    console.log(entry);
-    console.log("--");
-
     const itemData = entry;
-    console.log("data");
-    console.log(itemData);
-    console.log("--");
     try {
       const search = await fetch(`/api/${operation}/${item}`, {
         //when creating versions this method may need to change rememeber this
