@@ -144,7 +144,7 @@ export default function StepFive() {
       setErrors(newErrors);
     } else if (storedOnDB) {
       setCompletedStep(2);
-      changeStep(5);
+      changeStep(6);
     } else {
       setErrors([]);
       setConfirmationScreen(true);
@@ -192,7 +192,7 @@ export default function StepFive() {
                     styles.wrapper__not__creator__section__create__food_btn
                   }
                   onClick={() => {
-                    changeStep(3);
+                    changeStep(4);
                   }}
                 >
                   create a new food
