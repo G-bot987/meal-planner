@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { FORMDATA } from "./StepFive";
 import styles from "./StepFive.module.scss";
-import { createNewStore } from "@/zustland/store/store";
+import { createNewStore, endPointStore } from "@/zustland/store/store";
 
 interface PROPSINTERFACE {
   changedValues: Partial<FORMDATA>;
@@ -31,10 +31,41 @@ export default function Confirmation(props: PROPSINTERFACE) {
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
+    //cant use int here as it creates strange form behavours creating nan in input fields so using store
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
+  };
+
+  const { item, operation } = endPointStore((state) => state);
+  const { entry } = createNewStore((state) => state);
+
+  const handleSubmission = async () => {
+    console.log("entry");
+    console.log(entry);
+    console.log("--");
+
+    const itemData = entry;
+    console.log("data");
+    console.log(itemData);
+    console.log("--");
+    try {
+      const search = await fetch(`/api/${operation}/${item}`, {
+        //when creating versions this method may need to change rememeber this
+        method: "POST",
+        body: JSON.stringify(itemData),
+      });
+      console.log("post request");
+
+      const result = await search.json();
+      console.log(result);
+      console.log("--");
+    } catch (error) {
+      console.log("error");
+      console.log(error);
+      console.log("--");
+    }
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -54,7 +85,7 @@ export default function Confirmation(props: PROPSINTERFACE) {
           `${key} is not a positive number. You can only use numbers like 1, 4, 5, or 0.35. Do not include measurement units in your food nutrition; all measurements should be in grams.`
         );
       } else {
-        add({ [key]: value });
+        add({ [key]: valueAsInt });
       }
     }
 
@@ -63,7 +94,9 @@ export default function Confirmation(props: PROPSINTERFACE) {
     } else {
       setErrors([]);
       setCompletedStep(1);
-      changeStep(5);
+      handleSubmission();
+      return;
+      changeStep(6);
     }
   };
   return (

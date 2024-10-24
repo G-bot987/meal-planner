@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styles from "./create.module.scss";
 import New from "./new/New";
+import { createNewStore, endPointStore } from "@/zustland/store/store";
 
 export default function CreateNew() {
   const [versionUpdate, setVersionUpdate] = useState<string | null>(null);
+  const { setOperation, clearStore } = endPointStore();
+  const { changeStep } = createNewStore();
+
   return (
     <section className={styles.create__wrapper}>
       {!versionUpdate && (
@@ -21,6 +25,7 @@ export default function CreateNew() {
               }
               onClick={() => {
                 setVersionUpdate("version");
+                setOperation("version");
               }}
             >
               yes
@@ -30,7 +35,8 @@ export default function CreateNew() {
                 styles.create__wrapper__question__wrapper__btn__wrapper__btn
               }
               onClick={() => {
-                setVersionUpdate("new");
+                changeStep(3);
+                setOperation("new");
               }}
             >
               no
@@ -38,7 +44,6 @@ export default function CreateNew() {
           </section>
         </article>
       )}
-      {versionUpdate === "new" && <New />}
     </section>
   );
 }

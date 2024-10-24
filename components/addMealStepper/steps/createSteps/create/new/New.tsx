@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./new.module.scss";
-import { createNewStore } from "@/zustland/store/store";
+import { createNewStore, endPointStore } from "@/zustland/store/store";
 export default function New() {
   const [creatingNew, setCreatingNew] = useState<string | null>(null);
 
@@ -11,6 +11,8 @@ export default function New() {
   //   changeStep(0);
   // }, []);
   const { changeStep } = createNewStore();
+
+  const { setItem, clearStore } = endPointStore();
 
   return (
     <article className={styles.create__wrapper}>
@@ -37,7 +39,8 @@ export default function New() {
                 styles.create__wrapper__question__wrapper__new__btn__wrapper__btn
               }
               onClick={() => {
-                changeStep(3);
+                setItem("food");
+                changeStep(4);
               }}
             >
               food
