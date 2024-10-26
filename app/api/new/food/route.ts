@@ -5,31 +5,18 @@ import { authOptions } from '@/utils/authOptions';
 
 export async function POST(request: NextRequest) {
 
-    const foodToCreate = await request.json()
-
-    const session = await getServerSession(authOptions);
-    const id = session?.user.id
-
-    addFood(foodToCreate, id)
-
-
-    return   NextResponse.json({ message: 'Data received successfully', foodToCreate:foodToCreate })
-
-// try {
-//     switch (typeOf) {
-//         case 'global':
-//             const data = await globalSearchFoods(search, id)
-//             return   NextResponse.json(data)  
-//         case 'personal':
-//             const personalData = await personalSearchFoods(search, id)
-//             return   NextResponse.json(personalData)
-//         default:
-//             return NextResponse.json({ message: 'Invalid search type' }, { status: 400 });  
-//       }
-// } catch (error:any) {
-//     console.error('Error in search:', error);
-//     return NextResponse.json({ message: 'Something went wrong', error: error.message }, { status: 500 });
-// }
-
-
+    
+    try {
+        const foodToCreate = await request.json()
+    
+        const session = await getServerSession(authOptions);
+        const id = session?.user.id
+    
+        const res = await addFood(foodToCreate, id)
+    
+        return   NextResponse.json(res)
+        
+    } catch (error:any) {
+            return NextResponse.json({ message: 'your food could not be created', error: error.message }, { status: 500 });
+    }
 }
