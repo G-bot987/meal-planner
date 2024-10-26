@@ -87,27 +87,51 @@ export async function addFood(food:any, id:string|undefined) {
       const idAsInt = parseInt(id, 10)
       // Ensure `id` is a valid number before querying the database
       if (isNaN(idAsInt)) {
-            return 'Invalid user ID';
+            return{   status: 'failure',
+            message: 'a user could not be found', 
+          code: 401};
           }
-      const data =  await prisma.food.create({
-        data: {
-          user_id: idAsInt,
-          name: name,
-          calories: calories,
-          carbohydrates: carbohydrates,
-          fat: fat,
-          fibre: fibre,
-          protein: protein,
-          sugar: sugar,
-          weight: weight
-        },
-      })
-      
-     const response = data
-      return response    
+      // make request
+      try {
+        await prisma.food.create({
+          data: {
+            user_id: idAsInt,
+            name: name,
+            calories: calories,
+            carbohydrates: carbohydrates,
+            fat: fat,
+            fibre: fibre,
+            protein: protein,
+            sugar: sugar,
+            weight: weight
+          },
+        })
+        
+        return {   
+                  status: 'success',
+                  message: 'Food added successfully', 
+                  code: 201 
+                }  
+        
+      } catch (error:any) {
+        console.error('Error creating food:', error);
+        return {
+          status: 'failure',
+          message: 'prisma failed to create your food',
+          code:406
+        }
+        
+      }    
+
     case 'undefined':
-        return  'an error getting your session'
+      return{   status: 'failure',
+                message: 'a user could not be found', 
+                code: 401
+            };
     default:
-        return 'An unexpected error occurred';
+      return{   status: 'failure',
+                message: 'an error occured making this request', 
+                code: 400
+            };    
     }
 }

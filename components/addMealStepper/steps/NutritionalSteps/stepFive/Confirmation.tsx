@@ -57,6 +57,22 @@ export default function Confirmation(props: PROPSINTERFACE) {
       const result = await search.json();
       console.log(result);
       console.log("--");
+
+      switch (result.code) {
+        case 201:
+          console.log("greate success");
+          break;
+        case "undefined":
+          console.log("failure undefined");
+          throw new Error(
+            `Request failed with status code ${result || "unknown"}`
+          );
+        default:
+          console.log("failure default");
+          throw new Error(
+            `Request failed with status code ${result || "unknown"}`
+          );
+      }
     } catch (error) {
       console.log("error");
       console.log(error);
