@@ -1,6 +1,22 @@
 
 import prisma from '@/lib/prisma'
 
+
+class CustomError extends Error {
+  code: number;
+  cause?: string
+
+  constructor(message: string, code: number, cause?:string) {
+      super(message);
+
+      this.code = code;
+      this.cause = cause;
+      this.name = this.constructor.name;
+
+      Object.setPrototypeOf(this, CustomError.prototype);
+  }
+}
+
 export async function globalSearchFoods(search:string, id:string|undefined) {
 
     switch (typeof id) {
@@ -82,17 +98,22 @@ export async function addFood(food:any, id:string|undefined) {
   // will use a loop just destructing for now while iterating over logic
   const {name, calories, carbohydrates, fat, fibre, protein, sugar, weight} = food
 
+
   switch (typeof id) {
     case  'string':
+            // make request
+            try {
       const idAsInt = parseInt(id, 10)
       // Ensure `id` is a valid number before querying the database
       if (isNaN(idAsInt)) {
-            return{   status: 'failure',
-            message: 'a user could not be found', 
-          code: 401};
+        throw new CustomError(
+           'user id is not a number',
+           400
+        );
           }
-      // make request
-      try {
+
+
+        // can create multiple foods with same name nnot a problem but one user shouldn't have 2 foods with same name, throw error check
         await prisma.food.create({
           data: {
             user_id: idAsInt,
@@ -115,13 +136,9 @@ export async function addFood(food:any, id:string|undefined) {
         
       } catch (error:any) {
         console.error('Error creating food:', error);
-        return {
-          status: 'failure',
-          message: 'prisma failed to create your food',
-          code:406
-        }
-        
-      }    
+        throw new CustomError(
+          'prisma failed to create your food', error.code,error.message)
+        }  
 
     case 'undefined':
       return{   status: 'failure',

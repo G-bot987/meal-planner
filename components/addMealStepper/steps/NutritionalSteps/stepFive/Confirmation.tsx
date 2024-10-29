@@ -50,6 +50,7 @@ export default function Confirmation(props: PROPSINTERFACE) {
         headers: {
           "Content-Type": "application/json",
         },
+        //only provide some item data
         body: JSON.stringify(itemData),
       });
       console.log("post request");
@@ -57,7 +58,7 @@ export default function Confirmation(props: PROPSINTERFACE) {
       const result = await search.json();
       console.log(result);
       console.log("--");
-
+      //check error handling
       switch (result.code) {
         case 201:
           console.log("greate success");
