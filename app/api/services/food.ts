@@ -98,36 +98,35 @@ export async function addFood(food:any, id:string|undefined) {
   // will use a loop just destructing for now while iterating over logic
   const {name, calories, carbohydrates, fat, fibre, protein, sugar, weight} = food
 
-
   switch (typeof id) {
     case  'string':
             // make request
-            try {
-      const idAsInt = parseInt(id, 10)
-      // Ensure `id` is a valid number before querying the database
-      if (isNaN(idAsInt)) {
-        throw new CustomError(
-           'user id is not a number',
-           400
-        );
-          }
+      try {
+          const idAsInt = parseInt(id, 10)
+          // Ensure `id` is a valid number before querying the database
+          if (isNaN(idAsInt)) {
+              throw new CustomError(
+                'user id is not a number',
+                400
+              );
+            }
 
 
-        // can create multiple foods with same name nnot a problem but one user shouldn't have 2 foods with same name, throw error check
-        await prisma.food.create({
-          data: {
-            user_id: idAsInt,
-            name: name,
-            calories: calories,
-            carbohydrates: carbohydrates,
-            fat: fat,
-            fibre: fibre,
-            protein: protein,
-            sugar: sugar,
-            weight: weight
-          },
-        })
-        
+          // can create multiple foods with same name nnot a problem but one user shouldn't have 2 foods with same name, throw error check
+          await prisma.food.create({
+            data: {
+              user_id: idAsInt,
+              name: name,
+              calories: calories,
+              carbohydrates: carbohydrates,
+              fat: fat,
+              fibre: fibre,
+              protein: protein,
+              sugar: sugar,
+              weight: weight
+            },
+          })
+          
         return {   
                   status: 'success',
                   message: 'Food added successfully', 
@@ -135,20 +134,32 @@ export async function addFood(food:any, id:string|undefined) {
                 }  
         
       } catch (error:any) {
-        console.error('Error creating food:', error);
+        console.error('Error creating food:', error, 'your prisma error code is:', error.code);
         throw new CustomError(
-          'prisma failed to create your food', error.code,error.message)
+          'your food data was in the incorrect form', 400,error.message)
         }  
 
     case 'undefined':
-      return{   status: 'failure',
-                message: 'a user could not be found', 
-                code: 401
-            };
+      //handle these
+      try {
+
+        throw new CustomError(    
+          'a user could not be found',
+          401,
+          'session id was undefined in service', 
+        );
+      } catch (error) {
+        throw error; 
+      }
     default:
-      return{   status: 'failure',
-                message: 'an error occured making this request', 
-                code: 400
-            };    
+      try {
+        throw new CustomError (  'a user could not be found',
+        401,
+        'failure id was not a string in service caught in default case', 
+        );  
+      } catch (error) {
+        throw error; 
+      }
+  
     }
 }
