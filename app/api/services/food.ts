@@ -97,7 +97,6 @@ export async function addFood(food:any, id:string|undefined) {
 
   // will use a loop just destructing for now while iterating over logic
   const {name, calories, carbohydrates, fat, fibre, protein, sugar, weight} = food
-// id = 3;
 
   switch (typeof id) {
     case  'string':
