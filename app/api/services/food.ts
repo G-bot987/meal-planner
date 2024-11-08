@@ -142,7 +142,6 @@ export async function addFood(food:any, id:string|undefined) {
 
     case 'undefined':
       //handle these
-      console.log('onion soup')
       try {
 
         throw new CustomError(    
@@ -151,7 +150,6 @@ export async function addFood(food:any, id:string|undefined) {
           'session id was undefined in service', 
         );
       } catch (error) {
-        console.log('catch')
         throw error; 
       }
     default:
