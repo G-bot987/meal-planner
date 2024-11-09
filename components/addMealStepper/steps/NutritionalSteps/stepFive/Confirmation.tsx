@@ -43,6 +43,8 @@ export default function Confirmation(props: PROPSINTERFACE) {
 
   const handleSubmission = async () => {
     const itemData = entry;
+    // creator property will cause backend to fail on prisma.create as this property can not be set in the data sent using same store as that used to hold searched foods
+    delete itemData.creator;
     try {
       const search = await fetch(`/api/${operation}/${item}`, {
         //when creating versions this method may need to change rememeber this
