@@ -43,7 +43,7 @@ import { devtools } from "zustand/middleware";
     protein:number|null,
     sugar: number|null,
     weight: number|null,
-    creator: boolean|null
+    creator?: boolean|null
   };
 
   interface endpointState {
