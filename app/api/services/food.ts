@@ -1,5 +1,6 @@
 
 import prisma from '@/lib/prisma'
+import { FOODINTERFACE } from '@/utils/interfaces/mealsAndFoodsInterfaces/interfaces';
 
 
 class CustomError extends Error {
@@ -93,10 +94,8 @@ export async function personalSearchFoods(search:string, id:string|undefined) {
 }
 
 
-export async function addFood(food:any, id:string|undefined) {
+export async function addFood(food:FOODINTERFACE, id:string|undefined) {
 
-  // will use a loop just destructing for now while iterating over logic
-  const {name, calories, carbohydrates, fat, fibre, protein, sugar, weight} = food
 
   switch (typeof id) {
     case  'string':
@@ -110,20 +109,10 @@ export async function addFood(food:any, id:string|undefined) {
                 400
               );
             }
-
-
-          // can create multiple foods with same name nnot a problem but one user shouldn't have 2 foods with same name, throw error check
           await prisma.food.create({
             data: {
               user_id: idAsInt,
-              name: name,
-              calories: calories,
-              carbohydrates: carbohydrates,
-              fat: fat,
-              fibre: fibre,
-              protein: protein,
-              sugar: sugar,
-              weight: weight
+              ...food
             },
           })
           
