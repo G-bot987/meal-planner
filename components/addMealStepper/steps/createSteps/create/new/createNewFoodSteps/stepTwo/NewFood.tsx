@@ -11,7 +11,7 @@ export default function NewFood() {
     setStoredOnDB(false);
     clearEntry();
     add({ name: `${searchQuery}` });
-    add({ type: `food` });
+    // adding of type was removed here didn''t seem needed 9/11/24
     add({ creator: true });
     changeStep(5);
   };
