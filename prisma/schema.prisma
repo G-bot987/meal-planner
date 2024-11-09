@@ -85,6 +85,8 @@ model food {
   user_creator  user?            @relation(fields: [user_id], references: [id])
   user_id       Int?
   logged_meals  logged_meals[]   @relation("LoggedMealsToFood")
+
+  @@unique([name, user_id]) // a user can not have two foods with the same name although there can be multiple foods with the same name in the table
 }
 
 model meal {
