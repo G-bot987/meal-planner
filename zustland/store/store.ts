@@ -32,8 +32,9 @@ import { devtools } from "zustand/middleware";
   clearEntry: () => void;
 }
   
+
+// removed type here caused issues with create and didn't appear needed as meals will have its own store this will be more readable
   type entry = {
-    type: string|null
     name: string|null
     calories: number|null
     carbohydrates: number|null,
@@ -74,7 +75,6 @@ export const createNewStore = create<New>()(
       step: 0,
       storedOnDB: false,
         entry: {
-            type: null,
             name: null,
             calories: null,
             carbohydrates: null,
@@ -93,7 +93,7 @@ export const createNewStore = create<New>()(
         setStoredOnDB: (value:boolean) => set({ storedOnDB: value }), 
         setCompletedStep: (value:number) => set({ completedStep: value }), 
         changeStep: (step: number) => set({ step }), 
-        clearEntry: () => set({ entry: { type: null,
+        clearEntry: () => set({ entry: { 
           name: null,
           calories: null,
           carbohydrates: null,
@@ -102,7 +102,9 @@ export const createNewStore = create<New>()(
           creator: null,
           protein:null,
           sugar: null,
-          weight: null,} }), 
+          weight: null,
+        } 
+      }), 
     }))
 );
 
@@ -110,7 +112,6 @@ export const createNewStore = create<New>()(
 export const backUpNutritionalStore = create<backUp>()(
   devtools((set) => ({
       entry: {
-          type: null,
           name: null,
           calories: null,
           carbohydrates: null,
@@ -126,7 +127,7 @@ export const backUpNutritionalStore = create<backUp>()(
         cloneState.entry = {...cloneState.entry, ...property};
         return cloneState;
       }),
-      clearEntry: () => set({ entry: { type: null,
+      clearEntry: () => set({ entry: { 
         name: null,
         calories: null,
         carbohydrates: null,
@@ -135,7 +136,9 @@ export const backUpNutritionalStore = create<backUp>()(
         creator: null,
         protein:null,
         sugar: null,
-        weight: null,} }), 
+        weight: null,
+      } 
+    }), 
   }))
 );
 
@@ -148,6 +151,8 @@ export const endPointStore = create<endpointState>()(
     setOperation: (value:string) => set({ operation: value }), 
     clearStore: () => set({   
         item: null,
-        operation: null, }), 
+        operation: null, 
+        }
+      ), 
   }))
 );
