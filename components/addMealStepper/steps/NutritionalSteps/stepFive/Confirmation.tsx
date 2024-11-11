@@ -53,7 +53,6 @@ export default function Confirmation(props: PROPSINTERFACE) {
   const handleSubmission = useCallback(
     async () => {
       const currentEntry = createNewStore.getState().entry;
-      console.log("Current entry:", currentEntry);
       delete currentEntry.creator;
       try {
         const search = await fetch(`/api/${operation}/${item}`, {
@@ -66,6 +65,9 @@ export default function Confirmation(props: PROPSINTERFACE) {
 
         const result = await search.json();
         console.log("API Result:", result);
+        if (result) {
+          setDisplayMsg(false);
+        }
 
         switch (result.code) {
           case 201:
@@ -83,6 +85,8 @@ export default function Confirmation(props: PROPSINTERFACE) {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setDisplayMsg(true);
+
     const regex = /^0$|^\d+(\.\d+)?$/;
     const newErrors: string[] = [];
 
@@ -114,47 +118,53 @@ export default function Confirmation(props: PROPSINTERFACE) {
 
   return (
     <article>
-      <form onSubmit={handleSubmit}>
-        <button
-          onClick={() => {
-            setConfirmationScreen(!confirmationScreen);
-          }}
-        >
-          back
-        </button>
-        You have changed the following values please submit to confirm
-        {Array.isArray(arrayOfChangedNutrition) &&
-          arrayOfChangedNutrition.length > 0 &&
-          arrayOfChangedNutrition.map(([key, value]) => (
-            <section key={key}>
-              <label
-                className={styles.wrapper__form__field__wrapper__label}
-                htmlFor={`${key}`}
-              >
-                {key}
-              </label>
-              <input
-                type="text"
-                name={`${key}`}
-                className={styles.wrapper__form__field__wrapper__input}
-                value={formData[key] ?? ""}
-                onChange={handleChange}
-                placeholder={`${value}`}
-              />
-            </section>
-          ))}
-        {errors.length > 0 && (
-          <ul>
-            {errors.map((e: string, i: number) => (
-              <li key={i}>{e}</li>
+      {!displayMsg ? (
+        <form onSubmit={handleSubmit} className={styles.confirmation__form}>
+          <button
+            onClick={() => {
+              setConfirmationScreen(!confirmationScreen);
+            }}
+          >
+            back
+          </button>
+          You have changed the following values please submit to confirm
+          {Array.isArray(arrayOfChangedNutrition) &&
+            arrayOfChangedNutrition.length > 0 &&
+            arrayOfChangedNutrition.map(([key, value]) => (
+              <section key={key}>
+                <label
+                  className={styles.wrapper__form__field__wrapper__label}
+                  htmlFor={`${key}`}
+                >
+                  {key}
+                </label>
+                <input
+                  type="text"
+                  name={`${key}`}
+                  className={styles.wrapper__form__field__wrapper__input}
+                  value={formData[key] ?? ""}
+                  onChange={handleChange}
+                  placeholder={`${value}`}
+                />
+              </section>
             ))}
-          </ul>
-        )}
-        <button className={styles.wrapper__form__btn} type="submit">
-          Submit
-        </button>
-      </form>
-      <section></section>
+          {errors.length > 0 && (
+            <ul>
+              {errors.map((e: string, i: number) => (
+                <li key={i}>{e}</li>
+              ))}
+            </ul>
+          )}
+          <button className={styles.wrapper__form__btn} type="submit">
+            Submit
+          </button>
+        </form>
+      ) : (
+        <section>
+          awaiting response
+          <div className={styles.wrapper__loading__alert__spinner}></div>
+        </section>
+      )}
     </article>
   );
 }
