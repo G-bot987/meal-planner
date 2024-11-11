@@ -1,4 +1,11 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
+"use client";
+import React, {
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+  useState,
+  useCallback,
+} from "react";
 import { FORMDATA } from "./StepFive";
 import styles from "./StepFive.module.scss";
 import { createNewStore, endPointStore } from "@/zustland/store/store";
@@ -12,9 +19,12 @@ interface PROPSINTERFACE {
 export default function Confirmation(props: PROPSINTERFACE) {
   const { changedValues, confirmationScreen, setConfirmationScreen } = props;
   const [formData, setFormData] = useState<Partial<FORMDATA>>({});
+  const [displayMsg, setDisplayMsg] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
 
   const { add, changeStep, setStoredOnDB, setCompletedStep } = createNewStore();
+  // Listening to all changes, fires synchronously on every change
+  const entry = createNewStore((state) => state.entry);
 
   const arrayOfChangedNutrition = Object.entries(changedValues);
 
@@ -39,49 +49,37 @@ export default function Confirmation(props: PROPSINTERFACE) {
   };
 
   const { item, operation } = endPointStore((state) => state);
-  const { entry } = createNewStore((state) => state);
 
-  const handleSubmission = async () => {
-    const itemData = entry;
-    // creator property will cause backend to fail on prisma.create as this property can not be set in the data sent using same store as that used to hold searched foods
-    delete itemData.creator;
-    try {
-      const search = await fetch(`/api/${operation}/${item}`, {
-        //when creating versions this method may need to change rememeber this
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        //only provide some item data
-        body: JSON.stringify(itemData),
-      });
-      console.log("post request");
+  const handleSubmission = useCallback(
+    async () => {
+      const currentEntry = createNewStore.getState().entry;
+      console.log("Current entry:", currentEntry);
+      delete currentEntry.creator;
+      try {
+        const search = await fetch(`/api/${operation}/${item}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(currentEntry),
+        });
 
-      const result = await search.json();
-      console.log(result);
-      console.log("--");
-      //check error handling
-      switch (result.code) {
-        case 201:
-          console.log("greate success");
-          break;
-        case "undefined":
-          console.log("failure undefined");
-          throw new Error(
-            `Request failed with status code ${result || "unknown"}`
-          );
-        default:
-          console.log("failure default");
-          throw new Error(
-            `Request failed with status code ${result || "unknown"}`
-          );
+        const result = await search.json();
+        console.log("API Result:", result);
+
+        switch (result.code) {
+          case 201:
+            console.log("Great success");
+            break;
+          default:
+            console.log("Request failed with code:", result.code);
+        }
+      } catch (error) {
+        console.error("API Error:", error);
       }
-    } catch (error) {
-      console.log("error");
-      console.log(error);
-      console.log("--");
-    }
-  };
+    },
+    [entry, operation, item] // Add dependencies
+  );
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -111,49 +109,52 @@ export default function Confirmation(props: PROPSINTERFACE) {
       setCompletedStep(1);
       handleSubmission();
       return;
-      changeStep(6);
     }
   };
+
   return (
-    <form onSubmit={handleSubmit}>
-      <button
-        onClick={() => {
-          setConfirmationScreen(!confirmationScreen);
-        }}
-      >
-        back
-      </button>
-      You have changed the following values please submit to confirm
-      {Array.isArray(arrayOfChangedNutrition) &&
-        arrayOfChangedNutrition.length > 0 &&
-        arrayOfChangedNutrition.map(([key, value]) => (
-          <section key={key}>
-            <label
-              className={styles.wrapper__form__field__wrapper__label}
-              htmlFor={`${key}`}
-            >
-              {key}
-            </label>
-            <input
-              type="text"
-              name={`${key}`}
-              className={styles.wrapper__form__field__wrapper__input}
-              value={formData[key] ?? ""}
-              onChange={handleChange}
-              placeholder={`${value}`}
-            />
-          </section>
-        ))}
-      {errors.length > 0 && (
-        <ul>
-          {errors.map((e: string, i: number) => (
-            <li key={i}>{e}</li>
+    <article>
+      <form onSubmit={handleSubmit}>
+        <button
+          onClick={() => {
+            setConfirmationScreen(!confirmationScreen);
+          }}
+        >
+          back
+        </button>
+        You have changed the following values please submit to confirm
+        {Array.isArray(arrayOfChangedNutrition) &&
+          arrayOfChangedNutrition.length > 0 &&
+          arrayOfChangedNutrition.map(([key, value]) => (
+            <section key={key}>
+              <label
+                className={styles.wrapper__form__field__wrapper__label}
+                htmlFor={`${key}`}
+              >
+                {key}
+              </label>
+              <input
+                type="text"
+                name={`${key}`}
+                className={styles.wrapper__form__field__wrapper__input}
+                value={formData[key] ?? ""}
+                onChange={handleChange}
+                placeholder={`${value}`}
+              />
+            </section>
           ))}
-        </ul>
-      )}
-      <button className={styles.wrapper__form__btn} type="submit">
-        Submit
-      </button>
-    </form>
+        {errors.length > 0 && (
+          <ul>
+            {errors.map((e: string, i: number) => (
+              <li key={i}>{e}</li>
+            ))}
+          </ul>
+        )}
+        <button className={styles.wrapper__form__btn} type="submit">
+          Submit
+        </button>
+      </form>
+      <section></section>
+    </article>
   );
 }
