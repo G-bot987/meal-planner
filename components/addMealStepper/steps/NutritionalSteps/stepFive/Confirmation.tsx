@@ -119,7 +119,7 @@ export default function Confirmation(props: PROPSINTERFACE) {
   return (
     <article>
       {!displayMsg ? (
-        <form onSubmit={handleSubmit} className={styles.confirmation__form}>
+        <form onSubmit={handleSubmit}>
           <button
             onClick={() => {
               setConfirmationScreen(!confirmationScreen);
